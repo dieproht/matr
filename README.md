@@ -1,5 +1,7 @@
 # matr [ˈmætə]
 
+[![Join the chat at https://gitter.im/dieproht/matr](https://badges.gitter.im/dieproht/matr.svg)](https://gitter.im/dieproht/matr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A Scala 3 matrix library.
 
 Matr is an attempt to bring together safety, flexibility and simplicity for computing with matrices. 
