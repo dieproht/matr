@@ -1,5 +1,6 @@
 # matr [ˈmætə]
 
+![Build status](https://github.com/dieproht/matr/actions/workflows/ci.yml/badge.svg)
 [![Join the chat at https://gitter.im/dieproht/matr](https://badges.gitter.im/dieproht/matr.svg)](https://gitter.im/dieproht/matr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A Scala 3 matrix library.
