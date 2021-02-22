@@ -1,5 +1,3 @@
-// resolvers += "manyangled" at "https://dl.bintray.com/manyangled/maven/"
-
 val _scalaVersions: Seq[String] = Seq("3.0.0-M3")
 
 def commonSettings = Seq(
@@ -85,19 +83,7 @@ lazy val matr_tests =
     )
     .dependsOn(matr_api, matr_dflt_data, matr_dflt_ops, matr_std)
 
-// lazy val matr_coulomb = (project in file("matr-coulomb"))
-//   .settings(strictCommonSettings: _*)
-//   .settings(
-//     name := "matr-coulomb",
-//     libraryDependencies ++= Seq(
-//       //   "com.manyangled" %% "coulomb" % "0.4.6",
-//       "org.scalameta" %% "munit" % "0.7.20" % Test
-//     ),
-//     testFrameworks += new TestFramework("munit.Framework")
-//   )
-//   .dependsOn(matr_api)
-
 lazy val matr =
   crossProject(JVMPlatform)
     .in(file("."))
-    .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests) // , matr_coulomb)
+    .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests)
