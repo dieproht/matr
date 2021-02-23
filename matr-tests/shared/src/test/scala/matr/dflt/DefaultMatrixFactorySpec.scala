@@ -212,7 +212,7 @@ package matr.dflt:
                          _n, _n, _0,
                          _0, _0, _n)
 
-      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(elements: _*)
+      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(elements*)
 
       for 
         rowIdx <- 0 to 2
@@ -233,7 +233,7 @@ package matr.dflt:
                          _n, _n, _0,
                          _n, _n, _n)
 
-      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(elements: _*)
+      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(elements*)
 
       for 
         rowIdx <- 0 to 2

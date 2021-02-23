@@ -1,7 +1,7 @@
 package matr:
 
-  import scala.compiletime.ops.boolean._
-  import scala.compiletime.ops.int._
+  import scala.compiletime.ops.boolean.*
+  import scala.compiletime.ops.int.*
 
 
   trait Submatrix[RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int, T]

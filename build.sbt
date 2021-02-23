@@ -1,4 +1,4 @@
-val _scalaVersions: Seq[String] = Seq("3.0.0-M3")
+val _scalaVersions: Seq[String] = Seq("3.0.0-RC1")
 
 def commonSettings = Seq(
   ThisBuild / organization := "matr",
@@ -21,7 +21,7 @@ def commonSettings = Seq(
 def strictCommonSettings = commonSettings ++ Seq(
   scalacOptions ++= Seq(
     "-source",
-    "3.1"
+    "future"
   )
 )
 
@@ -77,8 +77,8 @@ lazy val matr_tests =
     .settings(
       name := "matr-tests",
       libraryDependencies ++= Seq(
-        "org.scalatest"     %% "scalatest"       % "3.2.3"   % Test,
-        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.3.0" % Test
+        "org.scalatest"     %% "scalatest"       % "3.2.5"   % Test,
+        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.5.0" % Test
       )
     )
     .dependsOn(matr_api, matr_dflt_data, matr_dflt_ops, matr_std)
