@@ -11,7 +11,6 @@ package matr.dflt:
   import matr.dflt.DefaultDenseMatrix
   import matr.dflt.DefaultSparseMatrix
   import matr.std.StandardOps.given
-  import matr.SpecialValues
   import scala.util.Random
   import org.scalacheck.Arbitrary
   import org.scalacheck.Gen
@@ -124,10 +123,10 @@ package matr.dflt:
 
     it should "be a SparseMatrix when containing more zeros than treshold" in {
 
-      val sp: SpecialValues[Long] = summon[SpecialValues[Long]]
+      val num: Numeric[Long] = summon[Numeric[Long]]
 
-      val _0 = sp.zero
-      val _1 = sp.one
+      val _0 = num.zero
+      val _1 = num.one
       
       val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(_0, _1, _0,
                                                                      _1, _0, _0,
@@ -139,10 +138,10 @@ package matr.dflt:
 
     it should "be a DenseMatrix when containing less zeros than treshold" in {
 
-      val sp: SpecialValues[Long] = summon[SpecialValues[Long]]
+      val num: Numeric[Long] = summon[Numeric[Long]]
 
-      val _0 = sp.zero
-      val _1 = sp.one
+      val _0 = num.zero
+      val _1 = num.one
       
       val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(_0, _1, _0,
                                                                      _1, _1, _0,
@@ -154,14 +153,14 @@ package matr.dflt:
     
     "A Builder" should "return zero for all indices when not yet updated" in {
       
-      val sp: SpecialValues[Int] = summon[SpecialValues[Int]]
+      val num: Numeric[Int] = summon[Numeric[Int]]
       val buildr = MatrixFactory[4, 7, Int].builder
 
       for 
         rowIdx <- 0 to 3
         colIdx <- 0 to 6
       do
-        buildr(rowIdx, colIdx) shouldEqual sp.zero
+        buildr(rowIdx, colIdx) shouldEqual num.zero
     }
 
 
@@ -204,9 +203,9 @@ package matr.dflt:
 
     it should "create a SparseMatrix with the given elements" in {
       
-      val sp: SpecialValues[Long] = summon[SpecialValues[Long]]
+      val num: Numeric[Long] = summon[Numeric[Long]]
 
-      val _0 = sp.zero
+      val _0 = num.zero
       def _n = Random.nextLong
       
       val elements = Seq(_0, _n, _0,
@@ -225,9 +224,9 @@ package matr.dflt:
 
     it should "create a DenseMatrix with the given elements" in {
       
-      val sp: SpecialValues[Long] = summon[SpecialValues[Long]]
+      val num: Numeric[Long] = summon[Numeric[Long]]
 
-      val _0 = sp.zero
+      val _0 = num.zero
       def _n = Random.nextLong
       
       val elements = Seq(_0, _n, _0,

@@ -2,16 +2,15 @@ package matr.dflt:
 
   import matr.MatrixFactory
   import matr.Matrix
-  import matr.SpecialValues
   import scala.collection.mutable
   import scala.reflect.ClassTag
 
   object DefaultMatrixFactory: 
     
     given defaultMatrixFactory[R <: Int, C <: Int, T]
+                              (using num: Numeric[T])
                               (using Matrix.DimsOK[R, C] =:= true)
                               (using vr: ValueOf[R], vc: ValueOf[C])
-                              (using sp: SpecialValues[T])
                               : MatrixFactory[R, C, T] with
 
       def builder: MatrixFactory.Builder[R, C, T] = 
@@ -39,23 +38,23 @@ package matr.dflt:
 
 
       def zeros: Matrix[R, C, T] = 
-        tabulate((_, _) => sp.zero)
+        tabulate((_, _) => num.zero)
 
       
       def ones: Matrix[R, C, T] =
-        tabulate((_, _) => sp.one)
+        tabulate((_, _) => num.one)
 
 
       def identity(using MatrixFactory.IsSquare[R, C] =:= true): Matrix[R, C, T] =
         tabulate{ (rowIdx, colIdx) => 
-          if rowIdx == colIdx then sp.one else sp.zero
+          if rowIdx == colIdx then num.one else num.zero
         }
 
   
     class Builder[R <: Int, C <: Int, T]
-                 (using vr: ValueOf[R], vc: ValueOf[C])
-                 (using sp: SpecialValues[T])
+                 (using num: Numeric[T])
                  (using Matrix.DimsOK[R, C] =:= true)
+                 (using vr: ValueOf[R], vc: ValueOf[C])
                  extends MatrixFactory.Builder[R, C, T], Matrix[R, C, T]:
 
       private var elemMap: mutable.Map[(Int, Int), T] = mutable.Map.empty
@@ -66,19 +65,19 @@ package matr.dflt:
 
       override def apply(rowIdx: Int, colIdx: Int): T = 
         if elemMap ne null then
-          elemMap.getOrElse((rowIdx, colIdx), sp.zero)
+          elemMap.getOrElse((rowIdx, colIdx), num.zero)
         else
           elemArr(RowMajorIndex.toIdx(rowIdx, colIdx, valueOf[C]))
 
       override def update(rowIdx: Int, colIdx: Int, v: T): this.type = 
         if (elemMap ne null) && (elemMap.size < treshold) then
-          if !sp.isZero(v) then
+          if v != num.zero then
             elemMap((rowIdx, colIdx)) = v
         else 
           if elemArr eq null then
             val tag: ClassTag[T] = ClassTags.fromValue(v)
             given ClassTag[T] = tag
-            elemArr = Array.fill(vr.value * vc.value)(sp.zero)
+            elemArr = Array.fill(vr.value * vc.value)(num.zero)
             elemMap.foreachEntry((mk, mv) => elemArr(RowMajorIndex.toIdx(mk._1, mk._2, vc.value)) = mv)
             elemMap = null
           elemArr(RowMajorIndex.toIdx(rowIdx, colIdx, valueOf[C])) = v
