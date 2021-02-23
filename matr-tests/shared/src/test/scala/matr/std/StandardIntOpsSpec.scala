@@ -1,27 +1,10 @@
 package matr.std:
 
-  import matr.ElementAddition
-  import matr.ElementSubtraction
   import matr.ElementMultiplication
   import matr.MatrFlatSpec
   import matr.std.StandardIntOps.given
 
   class StandardIntOpsSpec extends MatrFlatSpec:
-
-    "intAddition" should "add two Integers" in {
-      val intAdd = summon[ElementAddition[Int]]
-      forAll{ (a: Int, b: Int) =>
-        intAdd.plus(a, b) shouldEqual (a + b)
-      }
-    }
-
-
-    "intSubtraction" should "subtract two Integers" in {
-      val intSub = summon[ElementSubtraction[Int]]
-      forAll{ (a: Int, b: Int) =>
-        intSub.minus(a, b) shouldEqual (a - b)
-      }
-    }
 
 
     "intMultiplication" should "multiply two Integers" in {
