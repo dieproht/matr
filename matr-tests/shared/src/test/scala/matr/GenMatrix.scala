@@ -14,7 +14,7 @@ package matr:
              : Gen[Matrix[R, C, T]] = 
       Gen.containerOfN[List, T](vr.value * vc.value, arb.arbitrary)
         .map{ elements => 
-          mf.rowMajor(elements: _*)
+          mf.rowMajor(elements*)
         }
 
 
@@ -29,5 +29,5 @@ package matr:
              : Gen[Matrix[R, C, T]] = 
       Gen.containerOfN[List, T](vr.value * vc.value, Gen.chooseNum(min, max))
         .map{ elements => 
-          mf.rowMajor(elements: _*)
+          mf.rowMajor(elements*)
         }
