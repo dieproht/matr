@@ -1,28 +1,29 @@
 package matr:
   
+  import scala.compiletime.ops.any.==
   import scala.compiletime.ops.boolean.*
   import scala.compiletime.ops.int.*
 
 
   /** Represents a matrix in the mathematical sense and is the central type of this library. 
-   * Row dimension, column dimension and the data type of the elements are set at compile-time. 
-   * Elements are indexed zero-based. Concrete subclasses of this trait implement immutable storage
-   * and access to the elements of the matrix. Implementations for non-mathematical helper methods 
-   * (`mkString` etc.) are provided here, but can be overridden. Mathematical operations are handled 
-   * by type classes. 
-   * 
-   * Matrix elements are indexed according to the following pattern: 
-   * | 0,0        | 0,1      | 0,2 | 0,colIdx      | ... | 0,colDim-1        |
-   * | 1,0        | 1,1      | 1,2 | 1,colIdx      | ... | ...               |
-   * | 2,0        | 2,1      | 2,2 | ...           | ... | ...               |
-   * | rowIdx,0   | rowIdx,1 | ... | rowIdx,colIdx | ... | ...               |
-   * | ...        | ...      | ... | ...           | ... | ...               |
-   * | rowDim-1,0 | ...      | ... | ...           | ... | rowDim-1,colDim-1 |
-   * 
-   * @tparam R row dimension
-   * @tparam C column dimension
-   * @tparam T element type
-   */
+    * Row dimension, column dimension and the data type of the elements are set at compile-time. 
+    * Elements are indexed zero-based. Concrete subclasses of this trait implement immutable storage
+    * and access to the elements of the matrix. Implementations for non-mathematical helper methods 
+    * (`mkString` etc.) are provided here, but can be overridden. Mathematical operations are handled 
+    * by type classes. 
+    * 
+    * Matrix elements are indexed according to the following pattern: 
+    * | 0,0        | 0,1      | 0,2 | 0,colIdx      | ... | 0,colDim-1        |
+    * | 1,0        | 1,1      | 1,2 | 1,colIdx      | ... | ...               |
+    * | 2,0        | 2,1      | 2,2 | ...           | ... | ...               |
+    * | rowIdx,0   | rowIdx,1 | ... | rowIdx,colIdx | ... | ...               |
+    * | ...        | ...      | ... | ...           | ... | ...               |
+    * | rowDim-1,0 | ...      | ... | ...           | ... | rowDim-1,colDim-1 |
+    * 
+    * @tparam R row dimension
+    * @tparam C column dimension
+    * @tparam T element type
+    */
   trait Matrix[R <: Int, C <: Int, T]
               (using Matrix.DimsOK[R, C] =:= true)
               (using vr: ValueOf[R], vc: ValueOf[C]):
@@ -128,7 +129,7 @@ package matr:
                      : Matrix[R, C, V] = 
       impl.Combine(lhs, rhs, op)
 
-    /** Allows to easily "modify" this Matrix by creating a Builder initialized with the values of 
+    /** Allows to easily "modify" this Matrix by creating a `Builder` initialized with the values of 
      * this Matrix. 
      */ 
     def modify(using mf: MatrixFactory[R, C, T]): MatrixFactory.Builder[R, C, T] = 
@@ -152,7 +153,7 @@ package matr:
 
   object Matrix:
 
-    /** Validates the specified Matrix dimensions at compile-time
+    /** Validates the specified Matrix dimensions at compile-time. 
      */   
     type DimsOK[R <: Int, C <: Int] = R > 0 && C > 0
 
@@ -161,3 +162,8 @@ package matr:
     def IndexOK(rowIdx: Int, colIdx: Int, rowDim: Int, colDim: Int): Unit = 
       require(rowIdx >= 0 && rowIdx < rowDim && colIdx >= 0 && colIdx < colDim, 
         s"Zero-based given Index ($rowIdx, $colIdx) not within shape ($rowDim, $colDim) of Matrix!")
+
+
+    /** Checks if the specified Matrix dimensions form a squared Matrix. 
+     */ 
+    type IsSquare[R <: Int, C <: Int] = R == C

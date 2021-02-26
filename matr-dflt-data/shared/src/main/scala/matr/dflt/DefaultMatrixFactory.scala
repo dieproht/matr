@@ -45,8 +45,8 @@ package matr.dflt:
         tabulate((_, _) => num.one)
 
 
-      def identity(using MatrixFactory.IsSquare[R, C] =:= true): Matrix[R, C, T] =
-        tabulate{ (rowIdx, colIdx) => 
+      def identity(using Matrix.IsSquare[R, C] =:= true): Matrix[R, C, T] =
+        tabulate { (rowIdx, colIdx) => 
           if rowIdx == colIdx then num.one else num.zero
         }
 
