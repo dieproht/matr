@@ -13,6 +13,8 @@ def commonSettings = Seq(
       url("https://github.com/dieproht")
     )
   ),
+  ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
+  ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org",
   scalacOptions ++= Seq(
     "-deprecation",
     "-encoding",
