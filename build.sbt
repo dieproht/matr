@@ -13,8 +13,6 @@ def commonSettings = Seq(
       url("https://github.com/dieproht")
     )
   ),
-  ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
-  ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org",
   scalacOptions ++= Seq(
     "-deprecation",
     "-encoding",
@@ -97,7 +95,7 @@ lazy val matr =
   crossProject(JVMPlatform)
     .in(file("."))
     .settings(
-      sonatypeCredentialHost := "s01.oss.sonatype.org",
-      sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+      ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org",
+      ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
     )
     .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests)
