@@ -12,6 +12,10 @@ ThisBuild / developers := List(
     url("https://github.com/dieproht")
   )
 )
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+sonatypeCredentialHost := "s01.oss.sonatype.org"
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 def commonSettings = Seq(
   sonatypeCredentialHost := "s01.oss.sonatype.org",
