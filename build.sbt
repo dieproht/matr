@@ -1,18 +1,21 @@
 val _scalaVersions: Seq[String] = Seq("3.0.0-RC1")
 
+ThisBuild / organization := "io.github.dieproht"
+ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
+ThisBuild / scalaVersion := _scalaVersions.last
+ThisBuild / licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0"))
+ThisBuild / developers := List(
+  Developer(
+    "dieproht",
+    "Karl F Walkow",
+    "opensource@walkow.de",
+    url("https://github.com/dieproht")
+  )
+)
+
 def commonSettings = Seq(
-  ThisBuild / organization := "io.github.dieproht",
-  ThisBuild / homepage := Some(url("https://github.com/dieproht/matr")),
-  ThisBuild / scalaVersion := _scalaVersions.last,
-  ThisBuild / licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0")),
-  ThisBuild / developers := List(
-    Developer(
-      "dieproht",
-      "Karl F Walkow",
-      "opensource@walkow.de",
-      url("https://github.com/dieproht")
-    )
-  ),
+  sonatypeCredentialHost := "s01.oss.sonatype.org",
+  sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
   scalacOptions ++= Seq(
     "-deprecation",
     "-encoding",
@@ -94,8 +97,4 @@ lazy val matr_tests =
 lazy val matr =
   crossProject(JVMPlatform)
     .in(file("."))
-    .settings(
-      ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org",
-      ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
-    )
     .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests)
