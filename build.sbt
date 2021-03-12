@@ -12,8 +12,6 @@ ThisBuild / developers := List(
     url("https://github.com/dieproht")
   )
 )
-ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
-ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
@@ -101,5 +99,5 @@ lazy val matr_tests =
 lazy val matr =
   crossProject(JVMPlatform)
     .in(file("."))
-    .settings(commonSettings: _*)
+    .settings(publish / skip := true)
     .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests)
