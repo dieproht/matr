@@ -97,7 +97,7 @@ lazy val matr_tests =
     .dependsOn(matr_api, matr_dflt_data, matr_dflt_ops, matr_std)
 
 lazy val matr =
-  crossProject(JVMPlatform)
+  project
     .in(file("."))
     .settings(publish / skip := true)
-    .aggregate(matr_api, matr_dflt_data, matr_dflt_ops, matr_std, matr_tests)
+    .aggregate(matr_api.jvm, matr_dflt_data.jvm, matr_dflt_ops.jvm, matr_std.jvm, matr_tests.jvm)
