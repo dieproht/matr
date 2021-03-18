@@ -5,7 +5,7 @@ package matr.dflt:
   import scala.collection.mutable
   import scala.reflect.ClassTag
 
-  object DefaultMatrixFactory: 
+  trait DefaultMatrixFactory: 
     
     given defaultMatrixFactory[R <: Int, C <: Int, T]
                               (using num: Numeric[T])
@@ -91,3 +91,8 @@ package matr.dflt:
 
 
     private val MIN_DENSE_FILL: Float = 0.5  
+
+
+
+  object DefaultMatrixFactory extends DefaultMatrixFactory
+  

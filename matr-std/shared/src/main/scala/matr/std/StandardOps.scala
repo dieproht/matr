@@ -1,6 +1,9 @@
 package matr.std:
 
-  object StandardOps extends StandardDoubleOps, 
+  trait StandardOps extends StandardDoubleOps, 
                              StandardFloatOps, 
                              StandardIntOps,
                              StandardLongOps
+
+  object StandardOps extends StandardOps
+  
