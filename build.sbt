@@ -80,6 +80,17 @@ lazy val matr_std =
     )
     .dependsOn(matr_api)
 
+lazy val matr_bundle =
+  crossProject(JVMPlatform)
+    .crossType(CrossType.Full)
+    .withoutSuffixFor(JVMPlatform)
+    .in(file("matr-bundle"))
+    .settings(strictCommonSettings: _*)
+    .settings(
+      name := "matr-bundle"
+    )
+    .dependsOn(matr_dflt_data, matr_dflt_ops, matr_std)
+
 lazy val matr_tests =
   crossProject(JVMPlatform)
     .crossType(CrossType.Full)
@@ -94,10 +105,10 @@ lazy val matr_tests =
       ),
       publish / skip := true
     )
-    .dependsOn(matr_api, matr_dflt_data, matr_dflt_ops, matr_std)
+    .dependsOn(matr_bundle)
 
-lazy val matr =
+lazy val matrJVM =
   project
     .in(file("."))
     .settings(publish / skip := true)
-    .aggregate(matr_api.jvm, matr_dflt_data.jvm, matr_dflt_ops.jvm, matr_std.jvm, matr_tests.jvm)
+    .aggregate(matr_api.jvm, matr_dflt_data.jvm, matr_dflt_ops.jvm, matr_std.jvm, matr_bundle.jvm, matr_tests.jvm)
