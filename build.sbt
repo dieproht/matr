@@ -1,4 +1,4 @@
-val _scalaVersions: Seq[String] = Seq("3.0.0-RC1")
+val _scalaVersions: Seq[String] = Seq("3.0.0-RC2")
 
 ThisBuild / organization := "io.github.dieproht"
 ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
@@ -100,8 +100,8 @@ lazy val matr_tests =
     .settings(
       name := "matr-tests",
       libraryDependencies ++= Seq(
-        "org.scalatest"     %% "scalatest"       % "3.2.6"   % Test,
-        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.6.0" % Test
+        "org.scalatest"     %% "scalatest"       % "3.2.7"   % Test,
+        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.7.0" % Test
       ),
       publish / skip := true
     )
@@ -111,4 +111,11 @@ lazy val matrJVM =
   project
     .in(file("."))
     .settings(publish / skip := true)
-    .aggregate(matr_api.jvm, matr_dflt_data.jvm, matr_dflt_ops.jvm, matr_std.jvm, matr_bundle.jvm, matr_tests.jvm)
+    .aggregate(
+      matr_api.jvm,
+      matr_dflt_data.jvm,
+      matr_dflt_ops.jvm,
+      matr_std.jvm,
+      matr_bundle.jvm,
+      matr_tests.jvm
+    )
