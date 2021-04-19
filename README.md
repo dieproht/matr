@@ -12,11 +12,9 @@ Matr is an attempt to bring together safety, flexibility and simplicity for matr
 * Flexibility through loose coupling between interface, data and operations
 * Simplicity through an easily accessible API and "batteries included" default implementations, both with zero dependencies
 
-This project is currently in pre-release phase. If you are looking for a mature tool for matrix calculations in Scala, you should definitely consider [Breeze](https://github.com/scalanlp/breeze)!
+## Basic Usage
 
-## Basic usage
-
-```
+```scala
     import matr.dsl._
     import matr.Matrix
     import matr.MatrixFactory
@@ -53,7 +51,7 @@ This project is currently in pre-release phase. If you are looking for a mature 
 ```
 
 Matr checks the shape of a Matrix at compile-time, thus the following things do not compile:
-```
+```scala
     // Element (2, 3) is missing when creating the Matrix
     val ae = 
       || [3, 4, Int]
@@ -71,3 +69,14 @@ Matr checks the shape of a Matrix at compile-time, thus the following things do 
     val de = MatrixFactory[1, 2, Int].tabulate((_, _) => scala.util.Random.nextInt(20))
     val ee = c dot de
 ```
+
+## Status of the Project
+
+This project is currently in pre-release phase. If you are looking for a mature tool for matrix calculations in Scala, you should definitely consider [Breeze](https://github.com/scalanlp/breeze)!
+
+## Copyright and License
+
+All code is available to you under the Apache 2 license, available at
+https://opensource.org/licenses/Apache-2.0. 
+
+Copyright Karl F Walkow, 2020 - 2021. 
