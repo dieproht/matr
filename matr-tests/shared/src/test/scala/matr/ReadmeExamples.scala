@@ -2,9 +2,11 @@ package matr:
   
   object ReadmeExamples extends App: 
   
+    // Bring DSL in scope
     import matr.dsl._
-    import matr.Matrix
-    import matr.MatrixFactory
+    // Bring API interfaces in scope
+    import matr.{Matrix, MatrixFactory}
+    // Bring bundled implementations in scope
     import matr.MatrBundle.given
 
     // Create a Matrix by DSL
