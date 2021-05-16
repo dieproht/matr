@@ -1,8 +1,8 @@
 package matr:
   
   import scala.compiletime.ops.any.==
-  import scala.compiletime.ops.boolean.*
-  import scala.compiletime.ops.int.*
+  import scala.compiletime.ops.boolean.&&
+  import scala.compiletime.ops.int.{<, >, +, -}
 
 
   /** Represents a matrix in the mathematical sense and is the central type of this library. 

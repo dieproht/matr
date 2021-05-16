@@ -1,4 +1,4 @@
-val _scalaVersions: Seq[String] = Seq("3.0.0-RC2")
+val _scalaVersions: Seq[String] = Seq("3.0.0")
 
 ThisBuild / organization := "io.github.dieproht"
 ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
@@ -100,8 +100,8 @@ lazy val matr_tests =
     .settings(
       name := "matr-tests",
       libraryDependencies ++= Seq(
-        "org.scalatest"     %% "scalatest"       % "3.2.7"   % Test,
-        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.7.0" % Test
+        "org.scalatest"     %% "scalatest"       % "3.2.9"   % Test,
+        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.9.0" % Test
       ),
       publish / skip := true
     )

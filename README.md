@@ -23,9 +23,11 @@ libraryDependencies += "io.github.dieproht" %% "matr-bundle" % "<latest version>
 ## Basic Usage
 
 ```scala
+    // Bring DSL in scope
     import matr.dsl._
-    import matr.Matrix
-    import matr.MatrixFactory
+    // Bring API interfaces in scope
+    import matr.{Matrix, MatrixFactory}
+    // Bring bundled implementations in scope
     import matr.MatrBundle.given
 
     // Create a Matrix by DSL
@@ -38,7 +40,7 @@ libraryDependencies += "io.github.dieproht" %% "matr-bundle" % "<latest version>
     // Create a Matrix of ones
     val b: Matrix[3, 4, Int] = MatrixFactory[3, 4, Int].ones
     
-    // Add two matrices
+    // Add two Matrices
     val c: Matrix[3, 4, Int] = a + b
     
     // Create a Matrix of random numbers
@@ -66,7 +68,6 @@ Matr checks the shape of a Matrix at compile-time, thus the following code does 
       || 0 | 8 | 15 | 0 || $
       || 4 | 7 | 1  | 1 || $
       || 1 | 2 | 3  || $$
-
     
     // Adding two Matrices with different dimensions is not possible
     val be = MatrixFactory[2, 5, Int].ones
@@ -80,7 +81,7 @@ Matr checks the shape of a Matrix at compile-time, thus the following code does 
 
 ## Status of the Project
 
-This project is currently in pre-release phase. If you are looking for a mature tool for matrix calculations in Scala, you should definitely consider [Breeze](https://github.com/scalanlp/breeze)!
+This project is currently in an early phase. If you are looking for a mature tool for matrix calculations in Scala, you should definitely consider [Breeze](https://github.com/scalanlp/breeze)!
 
 ## Copyright and License
 
