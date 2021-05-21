@@ -15,6 +15,14 @@ package matr.std:
     }
 
 
+    "longBigDecimalMultiplication" should "multiply a Long and a BigDecimal" in {
+      val longBigDecimalMul = summon[ElementMultiplication[Long, BigDecimal]]
+      forAll{ (a: Long, b: BigDecimal) =>
+        longBigDecimalMul.times(a, b) shouldEqual (a * b)
+      }
+    }
+
+
     "longDoubleMultiplication" should "multiply a Long and a Double" in {
       val longDoubleMul = summon[ElementMultiplication[Long, Double]]
       forAll{ (a: Long, b: Double) =>
