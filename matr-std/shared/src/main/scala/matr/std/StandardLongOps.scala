@@ -9,6 +9,10 @@ package matr.std:
       def times(lhs: Long, rhs: Long): Out = lhs * rhs
       type Out = Long
 
+    given longBigDecimalMultiplication: ElementMultiplication[Long, BigDecimal] with
+      def times(lhs: Long, rhs: BigDecimal): Out = lhs * rhs
+      type Out = BigDecimal
+
     given longDoubleMultiplication: ElementMultiplication[Long, Double] with
       def times(lhs: Long, rhs: Double): Out = lhs * rhs
       type Out = Double

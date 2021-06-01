@@ -8,6 +8,10 @@ package matr.std:
       def times(lhs: Double, rhs: Double): Out = lhs * rhs
       type Out = Double
 
+    given doubleBigDecimalMultiplication: ElementMultiplication[Double, BigDecimal] with
+      def times(lhs: Double, rhs: BigDecimal): Out = lhs * rhs
+      type Out = BigDecimal
+
     given doubleFloatMultiplication: ElementMultiplication[Double, Float] with
       def times(lhs: Double, rhs: Float): Out = lhs * rhs
       type Out = Double

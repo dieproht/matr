@@ -16,6 +16,14 @@ package matr.std:
     }
 
     
+    "floatBigDecimalMultiplication" should "multiply a Float and a BigDecimal" in {
+      val floatBigDecimalMul = summon[ElementMultiplication[Float, BigDecimal]]
+      forAll{ (a: Float, b: BigDecimal) =>
+        floatBigDecimalMul.times(a, b) shouldEqual (a.toDouble * b)
+      }
+    }
+
+    
     "floatDoubleMultiplication" should "multiply a Float and a Double" in {
       val floatDoubleMul = summon[ElementMultiplication[Float, Double]]
       forAll{ (a: Float, b: Double) =>

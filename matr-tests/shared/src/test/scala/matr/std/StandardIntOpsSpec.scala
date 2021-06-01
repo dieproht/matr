@@ -14,6 +14,14 @@ package matr.std:
       }
     }
 
+
+    "intBigDecimalMultiplication" should "multiply an Integer and a BigDecimal" in {
+      val intBigDecimalMul = summon[ElementMultiplication[Int, BigDecimal]]
+      forAll{ (a: Int, b: BigDecimal) =>
+        intBigDecimalMul.times(a, b) shouldEqual (a * b)
+      }
+    }
+
     
     "intDoubleMultiplication" should "multiply an Integer and a Double" in {
       val intDoubleMul = summon[ElementMultiplication[Int, Double]]
