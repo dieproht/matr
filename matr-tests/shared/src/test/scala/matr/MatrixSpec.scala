@@ -16,8 +16,9 @@ package matr:
 
 
     "Constructing a Matrix with invalid shape" should "not compile" in {
-      assertDoesNotCompile("""val m: Matrix[0, 0, Float] = new Matrix[0, 0, Float]: 
-                                def apply(rowIdx: Int, colIdx: Int): Float = 1.23""")
+      assertDoesNotCompile("""val m: Matrix[0, 0, Float] = 
+                                new Matrix[0, 0, Float]: 
+                                  def apply(rowIdx: Int, colIdx: Int): Float = 1.23""")
     }
     
 
@@ -213,4 +214,23 @@ package matr:
         mResult === tcResult shouldBe true
       }
     }
+
+    "Calculating the determinant" should "require that this Matrix is squared (1)" in {
+      assertCompiles("""val m: Matrix[5, 5, Int] = ???
+                        val d: Int = m.det""")
+    }
     
+    it should "require that this Matrix is squared (2)" in {
+      assertDoesNotCompile("""val m: Matrix[4, 5, Int] = ???
+                              val d: Int = m.det""")
+    }
+
+    it should "give same result as the corresponding type class" in {
+      val detTC = summon[Determinant[4, 4, Int]]
+      given Arbitrary[Matrix[4, 4, Int]] = ArbitraryMatrix[4, 4, Int]
+      forAll { (m: Matrix[4, 4, Int]) => 
+        val tcResult: Int = detTC.det(m)
+        val mResult: Int = m.det
+        mResult shouldEqual tcResult
+      }
+    }

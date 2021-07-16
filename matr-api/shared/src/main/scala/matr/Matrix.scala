@@ -103,6 +103,12 @@ package matr:
                        : Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T] =
       sub.submatrix(this)
 
+    /** Returns the determinant of this Matrix. 
+     * Requires that this Matrix is a squared Matrix. 
+     */ 
+    final def det(using d: Determinant[R, C, T]): T = 
+       d.det(this)
+
     /**
      * Renders this Matrix to a String using the elements' `toString` method. 
      */
