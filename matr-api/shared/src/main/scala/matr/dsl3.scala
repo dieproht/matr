@@ -8,58 +8,80 @@ import matr.Matrix
 import matr.MatrixFactory
 import scala.Tuple.Union
 
-trait MatrixTupleReader[MatrixTuple]:
-     def readMatrix(m: MatrixTuple): Unit
+trait MatrixTupleReader[MatrixTuple, RowTuple]:
+     def readMatrix(m: MatrixTuple, rowDim: Int, setRow: (rowIdx: Int, row: RowTuple) => Unit): Unit
 
-given emptyMatrixTupleReader: MatrixTupleReader[EmptyTuple] with
-     def readMatrix(m: EmptyTuple): Unit = ()
+given emptyMatrixTupleReader[RowTuple]: MatrixTupleReader[EmptyTuple, RowTuple] with
+     def readMatrix(
+         m: EmptyTuple,
+         rowDim: Int,
+         setRow: (rowIdx: Int, row: RowTuple) => Unit
+     ): Unit = ()
 
-given inductiveMatrixTupleReader[RowTuple, MatrixTail <: Tuple](using
-    matrixTailReader: MatrixTupleReader[MatrixTail]
-): MatrixTupleReader[RowTuple *: MatrixTail] with
-     def readMatrix(m: RowTuple *: MatrixTail): Unit = ()
+given inductiveMatrixTupleReader[MatrixTail <: Tuple, RowTuple](using
+    matrixTailReader: MatrixTupleReader[MatrixTail, RowTuple]
+): MatrixTupleReader[RowTuple *: MatrixTail, RowTuple] with
+     def readMatrix(
+         m: RowTuple *: MatrixTail,
+         rowDim: Int,
+         setRow: (rowIdx: Int, row: RowTuple) => Unit
+     ): Unit =
+          val curRow: RowTuple            = m.head
+          val remainingMatrix: MatrixTail = m.tail
+          val rowIdx: Int                 = rowDim - remainingMatrix.size - 1
+          setRow(rowIdx, curRow)
+          matrixTailReader.readMatrix(remainingMatrix, rowDim, setRow)
 
 trait RowTupleReader[RowTuple, T]:
-     def readRow(row: RowTuple, colDim: Int, setElem: (colIdx: Int, elem: T) => Unit): Unit
-end RowTupleReader
+     def readRow(
+         rowIdx: Int,
+         row: RowTuple,
+         colDim: Int,
+         setElem: (Int, Int, T) => Unit
+     ): Unit
 
 given emptyRowTupleReader[T]: RowTupleReader[EmptyTuple, T] with
-     def readRow(row: EmptyTuple, colDim: Int, setElem: (colIdx: Int, elem: T) => Unit): Unit = ()
+     def readRow(
+         rowIdx: Int,
+         row: EmptyTuple,
+         colDim: Int,
+         setElem: (Int, Int, T) => Unit
+     ): Unit = ()
 
-given inductiveRowTupleReader[T, Tail <: Tuple](using
+given inductiveRowTupleReader[Tail <: Tuple, T](using
     tailReader: RowTupleReader[Tail, T]
 ): RowTupleReader[T *: Tail, T] with
-     def readRow(tuple: T *: Tail, colDim: Int, setElem: (colIdx: Int, elem: T) => Unit): Unit =
+     def readRow(
+         rowIdx: Int,
+         tuple: T *: Tail,
+         colDim: Int,
+         setElem: (Int, Int, T) => Unit
+     ): Unit =
           val curElem: T         = tuple.head
           val remainingRow: Tail = tuple.tail
           val colIdx: Int        = colDim - remainingRow.size - 1
-          setElem(colIdx, curElem)
-          tailReader.readRow(remainingRow, colDim, setElem)
+          setElem(rowIdx, colIdx, curElem)
+          tailReader.readRow(rowIdx, remainingRow, colDim, setElem)
 
 /*
- *  M[2, 3, Int]
+ *  M[2, 3, Int] mk
  *       ((1, 2, 3),
  *       (4, 5, 6))
  */
-object M:
-     def apply[R <: Int, C <: Int, T](using mf: MatrixFactory[R, C, T]) =
-          Buildr[0, R, C, T](mf.builder)
+class M[R <: Int, C <: Int, T](using mf: MatrixFactory[R, C, T]):
 
-case class Buildr[CurRow <: Int, R <: Int, C <: Int, T](mfb: MatrixFactory.Builder[R, C, T]):
+     private val builder: MatrixFactory.Builder[R, C, T] = mf.builder
 
-     def ||[RowType <: Tuple](row: RowType)(using CurRow < R =:= true)(using
-         Tuple.Size[RowType] =:= C
-     )(using Tuple.Union[RowType] =:= T)(using
-         curRow: ValueOf[CurRow],
-         vC: ValueOf[C]
-     )(using reader: RowTupleReader[RowType, T]): Buildr[CurRow + 1, R, C, T] =
-          val setter: (Int, T) => Unit = mfb.update(curRow.value, _, _)
-          reader.readRow(row, vC.value, setter)
-          Buildr(mfb)
-     def ||(eom: EndOfMatrix)(using CurRow == R =:= true): Matrix[R, C, T] = mfb.result
-
-end Buildr
-
-sealed trait EndOfMatrix
-object EndOfMatrix extends EndOfMatrix
-val $ = EndOfMatrix
+     infix def mk[MatrixTuple <: Tuple, RowTuple <: Tuple](
+         matrixTuple: MatrixTuple
+     )(using vR: ValueOf[R], vC: ValueOf[C])(using
+         mReader: MatrixTupleReader[MatrixTuple, RowTuple],
+         rowReader: RowTupleReader[RowTuple, T]
+     )(using Tuple.Size[MatrixTuple] =:= R, Tuple.Size[RowTuple] =:= C): Matrix[R, C, T] =
+          val setElem = (rowIdx: Int, colIdx: Int, elem: T) =>
+               builder.update(rowIdx, colIdx, elem)
+               ()
+          val setRow = (rowIdx: Int, row: RowTuple) =>
+               rowReader.readRow(rowIdx, row, vC.value, setElem)
+          mReader.readMatrix(matrixTuple, vR.value, setRow)
+          builder.result

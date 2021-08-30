@@ -1,4 +1,4 @@
-package matr:
+package matr
 
   import matr.ArbitraryMatrix
   import matr.dflt.DefaultMatrixFactory.given
