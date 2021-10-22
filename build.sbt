@@ -1,7 +1,7 @@
 val _scalaVersions: Seq[String] = Seq("3.0.2")
 
 ThisBuild / organization := "io.github.dieproht"
-ThisBuild / homepage     := Some(url("https://github.com/dieproht/matr"))
+ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
 ThisBuild / scalaVersion := _scalaVersions.last
 ThisBuild / licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0"))
 ThisBuild / developers := List(
@@ -13,11 +13,11 @@ ThisBuild / developers := List(
    )
 )
 sonatypeCredentialHost := "s01.oss.sonatype.org"
-sonatypeRepository     := "https://s01.oss.sonatype.org/service/local"
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 def commonSettings = Seq(
    sonatypeCredentialHost := "s01.oss.sonatype.org",
-   sonatypeRepository     := "https://s01.oss.sonatype.org/service/local",
+   sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
    scalacOptions ++= Seq(
       "-deprecation",
       "-encoding",
@@ -100,8 +100,8 @@ lazy val matr_tests =
       .settings(
          name := "matr-tests",
          libraryDependencies ++= Seq(
-            "org.scalatest"     %% "scalatest"       % "3.2.9"   % Test,
-            "org.scalatestplus" %% "scalacheck-1-15" % "3.2.9.0" % Test
+            "org.scalatest" %% "scalatest" % "3.2.9" % Test,
+            "org.scalatestplus" %% "scalacheck-1-15" % "3.2.10.0" % Test
          ),
          publish / skip := true
       )
