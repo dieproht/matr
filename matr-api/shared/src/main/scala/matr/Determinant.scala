@@ -1,15 +1,13 @@
-package matr: 
+package matr:
 
-/** Type class for calculating the determinant of a Matrix. 
- * 
- */
-  trait Determinant[R <: Int, C <: Int, T](using Determinant.Validated[R, C]): 
-    
-    def det(m: M): T 
+   /** Type class for calculating the determinant of a Matrix.
+     */
+   trait Determinant[R <: Int, C <: Int, T](using Determinant.Requirements[R, C]):
 
-    type M = Matrix[R, C, T]
+      def det(m: M): T
 
-  
-  object Determinant:
-    
-    type Validated[R <: Int, C <: Int] = Matrix.IsSquare[R, C] =:= true
+      type M = Matrix[R, C, T]
+
+   object Determinant:
+
+      type Requirements[R <: Int, C <: Int] = Matrix.IsSquare[R, C] =:= true
