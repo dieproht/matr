@@ -1,4 +1,4 @@
-package matr.dflt:
+package matr.dflt
 
   import matr.MatrixAddition
   import matr.MatrixFactory

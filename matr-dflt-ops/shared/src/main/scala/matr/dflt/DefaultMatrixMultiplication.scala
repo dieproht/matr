@@ -1,4 +1,4 @@
-package matr.dflt:
+package matr.dflt
 
   import matr.ElementMultiplication  
   import matr.Matrix
