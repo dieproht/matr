@@ -1,4 +1,4 @@
-package matr.dflt
+package test.matr.dflt
 
 import matr.ArbitraryMatrix
 import matr.GenMatrix
@@ -11,6 +11,7 @@ import matr.dflt.DefaultMatrixOps.given
 import matr.dflt.DefaultDenseMatrix
 import matr.dflt.DefaultSparseMatrix
 import matr.std.StandardOps.given
+import matr.util.RowMajorIndex
 import scala.util.Random
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
