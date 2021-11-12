@@ -7,7 +7,7 @@ package matr.dflt
   trait DefaultTranspose:
 
     given defaultTranspose[R <: Int, C <: Int, T]
-                          (using Matrix.DimsOK[C, R] =:= true)
+                          (using Matrix.DimensionRequirements[C, R])
                           (using ValueOf[R], ValueOf[C])
                           : Transpose[R, C, T] with 
 
@@ -18,7 +18,7 @@ package matr.dflt
   object DefaultTranspose extends DefaultTranspose:
 
     final class TransposeView[OrigR <: Int, OrigC <: Int, T](orig: Matrix[OrigR, OrigC, T])
-                             (using Matrix.DimsOK[OrigC, OrigR] =:= true)
+                             (using Matrix.DimensionRequirements[OrigC, OrigR])
                              (using ValueOf[OrigR], ValueOf[OrigC])
                              extends Matrix[OrigC, OrigR, T]:
       

@@ -1,11 +1,12 @@
 package matr.dflt
 
 import matr.Matrix
+import matr.util.RowMajorIndex
 import scala.reflect.ClassTag
 
 case class DefaultDenseMatrix[R <: Int, C <: Int, T]
       (private val elements: Array[T])
-      (using Matrix.DimsOK[R, C] =:= true)
+      (using Matrix.DimensionRequirements[R, C])
       (using vr: ValueOf[R], vc: ValueOf[C])
     extends Matrix[R, C, T]:
    lhs =>

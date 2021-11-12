@@ -5,7 +5,7 @@ import matr.Matrix
 case class DefaultSparseMatrix[R <: Int, C <: Int, T]
       (private val elements: Map[(Int, Int), T])
       (using num: Numeric[T])
-      (using Matrix.DimsOK[R, C] =:= true)
+      (using Matrix.DimensionRequirements[R, C])
       (using vr: ValueOf[R], vc: ValueOf[C])
     extends Matrix[R, C, T]:
    lhs =>

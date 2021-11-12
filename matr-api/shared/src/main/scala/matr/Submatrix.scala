@@ -29,7 +29,7 @@ trait Submatrix[RowIdxTL <: Int,
                 T
 ]
       (using Submatrix.SliceOK[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C] =:= true)
-      (using Matrix.DimsOK[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1] =:= true):
+      (using Matrix.DimensionRequirements[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1]):
 
    def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]
 

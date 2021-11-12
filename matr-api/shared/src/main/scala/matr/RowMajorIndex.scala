@@ -1,4 +1,4 @@
-package matr.dflt
+package matr.util
 
 object RowMajorIndex:
 

@@ -28,7 +28,7 @@ import scala.compiletime.ops.int.{<, >, +, -}
   *   element type
   */
 trait Matrix[R <: Int, C <: Int, T]
-      (using Matrix.DimsOK[R, C] =:= true)
+      (using Matrix.DimensionRequirements[R, C])
       (using vr: ValueOf[R], vc: ValueOf[C]):
 
    lhs =>
@@ -172,7 +172,7 @@ object Matrix:
 
    /** Validates the specified Matrix dimensions at compile-time.
      */
-   type DimsOK[R <: Int, C <: Int] = R > 0 && C > 0
+   type DimensionRequirements[R <: Int, C <: Int] = (R > 0 && C > 0) =:= true
 
    /** Validates the specified row and column index within the given Matrix dimensions.
      */

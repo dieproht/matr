@@ -7,7 +7,7 @@ import org.scalacheck.Gen.Choose
 object GenMatrix:
 
    def apply[R <: Int, C <: Int, T]
-         (using Matrix.DimsOK[R, C] =:= true)
+         (using Matrix.DimensionRequirements[R, C])
          (using vr: ValueOf[R], vc: ValueOf[C])
          (using mf: MatrixFactory[R, C, T])
          (using arb: Arbitrary[T])
@@ -21,7 +21,7 @@ object GenNumericMatrix:
 
    def apply[R <: Int, C <: Int, T]
          (min: T, max: T)
-         (using Matrix.DimsOK[R, C] =:= true)
+         (using Matrix.DimensionRequirements[R, C])
          (using vr: ValueOf[R], vc: ValueOf[C])
          (using mf: MatrixFactory[R, C, T])
          (using Choose[T])
