@@ -11,7 +11,7 @@ object M:
 
    def apply[R <: Int, C <: Int, T]
          (using vr: ValueOf[R], vc: ValueOf[C])
-         (using Matrix.DimsOK[R, C] =:= true)
+         (using Matrix.Requirements.NonNegativeDimensions[R, C])
          (using mf: MatrixFactory[R, C, T])
          : DslBuilder[0, -1, R, C, T] =
       DslBuilder(mf.builder)

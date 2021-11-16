@@ -12,6 +12,9 @@ ThisBuild / developers := List(
       url("https://github.com/dieproht")
    )
 )
+ThisBuild / semanticdbEnabled := true
+ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 

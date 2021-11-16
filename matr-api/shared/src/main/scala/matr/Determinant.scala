@@ -10,4 +10,4 @@ trait Determinant[R <: Int, C <: Int, T](using Determinant.Requirements[R, C]):
 
 object Determinant:
 
-   type Requirements[R <: Int, C <: Int] = Matrix.IsSquare[R, C] =:= true
+   type Requirements[R <: Int, C <: Int] = Matrix.Requirements.IsSquare[R, C]

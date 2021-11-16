@@ -7,7 +7,7 @@ package matr.dflt
   trait DefaultTranspose:
 
     given defaultTranspose[R <: Int, C <: Int, T]
-                          (using Matrix.DimsOK[C, R] =:= true)
+                          (using Matrix.Requirements.NonNegativeDimensions[C, R])
                           (using ValueOf[R], ValueOf[C])
                           : Transpose[R, C, T] with 
 
@@ -18,12 +18,12 @@ package matr.dflt
   object DefaultTranspose extends DefaultTranspose:
 
     final class TransposeView[OrigR <: Int, OrigC <: Int, T](orig: Matrix[OrigR, OrigC, T])
-                             (using Matrix.DimsOK[OrigC, OrigR] =:= true)
+                             (using Matrix.Requirements.NonNegativeDimensions[OrigC, OrigR])
                              (using ValueOf[OrigR], ValueOf[OrigC])
                              extends Matrix[OrigC, OrigR, T]:
       
       override def apply(rowIdx: Int, colIdx: Int): T = 
-        Matrix.IndexOK(rowIdx, colIdx, rowDim, colDim)
+        Matrix.Requirements.positionWithinShape(rowIdx, colIdx, rowDim, colDim)
         orig(colIdx, rowIdx)
 
 
