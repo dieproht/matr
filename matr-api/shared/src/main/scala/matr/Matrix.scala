@@ -28,7 +28,7 @@ import scala.compiletime.ops.int.{<, >, +, -}
   *   element type
   */
 trait Matrix[R <: Int, C <: Int, T]
-      (using Matrix.DimsOK[R, C] =:= true)
+      (using Matrix.Requirements.NonNegativeDimensions[R, C])
       (using vr: ValueOf[R], vc: ValueOf[C]):
 
    lhs =>
@@ -170,18 +170,20 @@ trait Matrix[R <: Int, C <: Int, T]
 
 object Matrix:
 
-   /** Validates the specified Matrix dimensions at compile-time.
-     */
-   type DimsOK[R <: Int, C <: Int] = R > 0 && C > 0
+   object Requirements:
 
-   /** Validates the specified row and column index within the given Matrix dimensions.
-     */
-   def IndexOK(rowIdx: Int, colIdx: Int, rowDim: Int, colDim: Int): Unit =
-      require(
-         rowIdx >= 0 && rowIdx < rowDim && colIdx >= 0 && colIdx < colDim,
-         s"Zero-based given Index ($rowIdx, $colIdx) not within shape ($rowDim, $colDim) of Matrix!"
-      )
+      /** Validates at compile-time that the specified Matrix dimensions are non-negative.
+        */
+      type NonNegativeDimensions[R <: Int, C <: Int] = (R > 0 && C > 0) =:= true
 
-   /** Checks if the specified Matrix dimensions form a squared Matrix.
-     */
-   type IsSquare[R <: Int, C <: Int] = R == C
+      /** Validates at compile-time that the specified Matrix dimensions form a squared Matrix.
+        */
+      type IsSquare[R <: Int, C <: Int] = R == C =:= true
+
+      /** Validates the specified row and column index within the given Matrix dimensions.
+        */
+      def positionWithinShape(rowIdx: Int, colIdx: Int, rowDim: Int, colDim: Int): Unit =
+         require(
+            rowIdx >= 0 && rowIdx < rowDim && colIdx >= 0 && colIdx < colDim,
+            s"Given zero-based possition ($rowIdx, $colIdx) not within shape ($rowDim, $colDim) of Matrix!"
+         )

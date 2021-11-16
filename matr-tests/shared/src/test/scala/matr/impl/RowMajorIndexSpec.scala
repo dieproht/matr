@@ -1,6 +1,7 @@
-package matr.dflt
+package test.matr.impl
 
 import matr.MatrFlatSpec
+import matr.util.RowMajorIndex
 
 class RowMajorIndexSpec extends MatrFlatSpec:
 
