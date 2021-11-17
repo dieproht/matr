@@ -33,8 +33,7 @@ trait DefaultMatrixFactory:
                    if v != num.zero then elemMap((rowIdx, colIdx)) = v
                 else
                    if elemArr eq null then
-                      val tag: ClassTag[T] = ClassTags.fromValue(v)
-                      given ClassTag[T] = tag
+                      given ClassTag[T] = ClassTag(v.getClass)
                       elemArr = Array.fill(rowDim * colDim)(num.zero)
                       elemMap.foreachEntry((mk, mv) =>
                          elemArr(RowMajorIndex.toIdx(mk._1, mk._2, colDim)) = mv
