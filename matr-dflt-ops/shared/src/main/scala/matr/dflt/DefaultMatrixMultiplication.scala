@@ -8,9 +8,11 @@ import matr.MatrixMultiplication
 trait DefaultMatrixMultiplication:
 
    given defaultMatrixMultiplication[R <: Int, C <: Int, L <: Int, T, U, X]
-            (using m: ElementMultiplication.Aux[T, U, X])
-            (using num: Numeric[X])
-            (using mf: MatrixFactory[R, L, X])
+            (using
+             m: ElementMultiplication.Aux[T, U, X],
+             num: Numeric[X],
+             mf: MatrixFactory[R, L, X]
+            )
             (using vr: ValueOf[R], vc: ValueOf[C], vl: ValueOf[L])
             : MatrixMultiplication[R, C, L, T, U] with
 
