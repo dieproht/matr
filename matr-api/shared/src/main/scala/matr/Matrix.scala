@@ -29,7 +29,7 @@ import scala.compiletime.ops.int.{<, >, >=, +, -}
   */
 trait Matrix[R <: Int, C <: Int, T]
          (using Matrix.Requirements.NonNegativeDimensions[R, C])
-         (using vr: ValueOf[R], vc: ValueOf[C]):
+         (using ValueOf[R], ValueOf[C]):
 
    lhs =>
 
@@ -60,11 +60,11 @@ trait Matrix[R <: Int, C <: Int, T]
 
    /** Returns the row dimension.
      */
-   final def rowDim: Int = vr.value
+   final def rowDim: Int = valueOf[R]
 
    /** Returns the column dimension.
      */
-   final def colDim: Int = vc.value
+   final def colDim: Int = valueOf[C]
 
    /** Checks the equality of this and the other Matrix by performing element-wise comparision.
      *
