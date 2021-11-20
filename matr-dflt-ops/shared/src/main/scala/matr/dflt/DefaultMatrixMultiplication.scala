@@ -33,7 +33,7 @@ package matr.dflt
           j = j + 1      
         buildr.result
 
-      type Out = Matrix[R, L, X]
- 
+      type OutT = X
 
+      
   object DefaultMatrixMultiplication extends DefaultMatrixMultiplication
