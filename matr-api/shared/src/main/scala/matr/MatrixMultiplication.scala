@@ -14,8 +14,11 @@ package matr
   *   Element type of the left-hand side operand
   * @tparam U
   *   Element type of the right-hand side operand
+  * @tparam X
+  *   Element type of the result
   */
-trait MatrixMultiplication[R <: Int, C <: Int, L <: Int, T, U]:
+trait MatrixMultiplication[R <: Int, C <: Int, L <: Int, T, U, X]
+         (using ElementMultiplication.Aux[T, U, X]):
 
    def dot(lhs: Lhs, rhs: Rhs): Out
 
@@ -23,4 +26,4 @@ trait MatrixMultiplication[R <: Int, C <: Int, L <: Int, T, U]:
 
    type Rhs = Matrix[C, L, U]
 
-   type Out
+   type Out = Matrix[R, L, X]
