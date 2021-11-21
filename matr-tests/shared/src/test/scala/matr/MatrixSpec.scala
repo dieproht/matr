@@ -53,29 +53,29 @@ class MatrixSpec extends MatrFlatSpec:
    }
 
    "Matrix.rowDim" should "return row dimension" in {
-      val m: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
       m.rowDim shouldEqual 2
    }
 
    "Matrix.colDim" should "return column dimension" in {
-      val m: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
       m.colDim shouldEqual 3
    }
 
    "Comparing two matrices" should "require matrices with same element type" in {
-      val m1: Matrix[6, 4, Double] =
-         MatrixFactory[6, 4, Double].tabulate((_, _) => Random.nextDouble)
+      val m1: Matrix[6, 4, Double] = MatrixFactory[6, 4, Double]
+         .tabulate((_, _) => Random.nextDouble)
       val m2: Matrix[6, 4, Int] = MatrixFactory[6, 4, Int].tabulate((_, _) => Random.nextInt)
       assertTypeError("val res = m1 === m2")
    }
 
    it should "require matrices with same shape" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[4, 4, Double] =
-         MatrixFactory[4, 4, Double].tabulate((_, _) => Random.nextDouble)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
+      val m2: Matrix[4, 4, Double] = MatrixFactory[4, 4, Double]
+         .tabulate((_, _) => Random.nextDouble)
       assertTypeError("val res = m1 === m2")
    }
 
@@ -90,18 +90,17 @@ class MatrixSpec extends MatrFlatSpec:
    }
 
    "Adding two matrices" should "require matrices with same element type" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[2, 3, Float] =
-         MatrixFactory[2, 3, Float].tabulate((_, _) => Random.nextFloat)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
+      val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float].tabulate((_, _) => Random.nextFloat)
       assertTypeError("val sum = m1 + m2")
    }
 
    it should "require matrices with same shape" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[2, 7, Double] =
-         MatrixFactory[2, 7, Double].tabulate((_, _) => Random.nextDouble)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
+      val m2: Matrix[2, 7, Double] = MatrixFactory[2, 7, Double]
+         .tabulate((_, _) => Random.nextDouble)
       assertTypeError("val sum = m1 + m2")
    }
 
@@ -116,18 +115,17 @@ class MatrixSpec extends MatrFlatSpec:
    }
 
    "Subtracting two matrices" should "require matrices with same element type" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[2, 3, Float] =
-         MatrixFactory[2, 3, Float].tabulate((_, _) => Random.nextFloat)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
+      val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float].tabulate((_, _) => Random.nextFloat)
       assertTypeError("val sum = m1 - m2")
    }
 
    it should "require matrices with same shape" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[2, 7, Double] =
-         MatrixFactory[2, 7, Double].tabulate((_, _) => Random.nextDouble)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
+      val m2: Matrix[2, 7, Double] = MatrixFactory[2, 7, Double]
+         .tabulate((_, _) => Random.nextDouble)
       assertTypeError("val sum = m1 - m2")
    }
 
@@ -141,24 +139,26 @@ class MatrixSpec extends MatrFlatSpec:
       }
    }
 
-   "Multiplying two matrices" should "require that the row dim of the first equals the column dim of the second factor" in {
-      val m1: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
-      assertTypeError("val prod = m1 dot m2")
-   }
+   "Multiplying two matrices" should
+      "require that the row dim of the first equals the column dim of the second factor" in {
+         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+            .tabulate((_, _) => Random.nextDouble)
+         val m2: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+            .tabulate((_, _) => Random.nextDouble)
+         assertTypeError("val prod = m1 dot m2")
+      }
 
    it should "give same result as the corresponding type class" in {
 
-      val matrixMul = summon[MatrixMultiplication[3, 4, 5, Int, Int]]
+      val matrixMul = summon[MatrixMultiplication[3, 4, 5, Int, Int, Int]]
 
       val maxVal = 100
 
-      val gen = for
-         g1 <- GenNumericMatrix[3, 4, Int](-1 * maxVal, maxVal)
-         g2 <- GenNumericMatrix[4, 5, Int](-1 * maxVal, maxVal)
-      yield (g1, g2)
+      val gen =
+         for
+            g1 <- GenNumericMatrix[3, 4, Int](-1 * maxVal, maxVal)
+            g2 <- GenNumericMatrix[4, 5, Int](-1 * maxVal, maxVal)
+         yield (g1, g2)
 
       forAll(gen) { (m1: Matrix[3, 4, Int], m2: Matrix[4, 5, Int]) =>
          val tcResult: Matrix[3, 5, Int] = matrixMul.dot(m1, m2)
@@ -178,14 +178,14 @@ class MatrixSpec extends MatrFlatSpec:
    }
 
    "Getting a submatrix" should "require that the top left coordinate is within matrix shape" in {
-      val m: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
       assertTypeError("val sub = m.sub[-1, 0, 1, 1]")
    }
 
    it should "require that the bottom right coordinate is within matrix shape" in {
-      val m: Matrix[2, 3, Double] =
-         MatrixFactory[2, 3, Double].tabulate((_, _) => Random.nextDouble)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
+         .tabulate((_, _) => Random.nextDouble)
       assertTypeError("val sub = m.sub[0, 0, 2, 3]")
    }
 

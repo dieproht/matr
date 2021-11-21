@@ -2,7 +2,11 @@ package matr
 
 import scala.compiletime.ops.any.==
 import scala.compiletime.ops.boolean.&&
-import scala.compiletime.ops.int.{<, >, >=, +, -}
+import scala.compiletime.ops.int.+
+import scala.compiletime.ops.int.-
+import scala.compiletime.ops.int.<
+import scala.compiletime.ops.int.>
+import scala.compiletime.ops.int.>=
 
 /** Represents a matrix in the mathematical sense and is the central type of this library. Row
   * dimension, column dimension and the data type of the elements are set at compile-time. Elements
@@ -83,9 +87,9 @@ trait Matrix[R <: Int, C <: Int, T]
 
    /** Performs a Matrix Multiplication by calculating the dot product.
      */
-   final infix def dot[L <: Int, U]
+   final infix def dot[L <: Int, U, X]
             (rhs: Matrix[C, L, U])
-            (using mm: MatrixMultiplication[R, C, L, T, U])
+            (using mm: MatrixMultiplication[R, C, L, T, U, X])
             : mm.Out = mm.dot(lhs, rhs)
 
    /** Returns the transposed Matrix.
