@@ -15,8 +15,7 @@ class DslSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[1, 1, Int]] = ArbitraryMatrix[1, 1, Int]
 
       forAll { (mg: Matrix[1, 1, Int]) =>
-         val md: Matrix[1, 1, Int] = ||[1, 1, Int]
-            || mg(0, 0) || $$
+         val md: Matrix[1, 1, Int] = ||[1, 1, Int] || mg(0, 0) || $$
 
          md === mg shouldBe true
       }
@@ -27,8 +26,7 @@ class DslSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[1, 2, Int]] = ArbitraryMatrix[1, 2, Int]
 
       forAll { (mg: Matrix[1, 2, Int]) =>
-         val md: Matrix[1, 2, Int] = ||[1, 2, Int]
-            || mg(0, 0) | mg(0, 1) || $$
+         val md: Matrix[1, 2, Int] = ||[1, 2, Int] || mg(0, 0) | mg(0, 1) || $$
 
          md === mg shouldBe true
       }
@@ -39,9 +37,7 @@ class DslSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[2, 1, Int]] = ArbitraryMatrix[2, 1, Int]
 
       forAll { (mg: Matrix[2, 1, Int]) =>
-         val md: Matrix[2, 1, Int] = ||[2, 1, Int]
-            || mg(0, 0) || $
-            || mg(1, 0) || $$
+         val md: Matrix[2, 1, Int] = ||[2, 1, Int] || mg(0, 0) || $ || mg(1, 0) || $$
 
          md === mg shouldBe true
       }
@@ -52,9 +48,8 @@ class DslSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[2, 2, Int]] = ArbitraryMatrix[2, 2, Int]
 
       forAll { (mg: Matrix[2, 2, Int]) =>
-         val md: Matrix[2, 2, Int] = ||[2, 2, Int]
-            || mg(0, 0) | mg(0, 1) || $
-            || mg(1, 0) | mg(1, 1) || $$
+         val md: Matrix[2, 2, Int] =
+            ||[2, 2, Int] || mg(0, 0) | mg(0, 1) || $ || mg(1, 0) | mg(1, 1) || $$
 
          md === mg shouldBe true
       }
@@ -65,11 +60,12 @@ class DslSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[4, 7, Int]] = ArbitraryMatrix[4, 7, Int]
 
       forAll { (mg: Matrix[4, 7, Int]) =>
-         val md: Matrix[4, 7, Int] = ||[4, 7, Int]
-            || mg(0, 0) | mg(0, 1) | mg(0, 2) | mg(0, 3) | mg(0, 4) | mg(0, 5) | mg(0, 6) || $
-            || mg(1, 0) | mg(1, 1) | mg(1, 2) | mg(1, 3) | mg(1, 4) | mg(1, 5) | mg(1, 6) || $
-            || mg(2, 0) | mg(2, 1) | mg(2, 2) | mg(2, 3) | mg(2, 4) | mg(2, 5) | mg(2, 6) || $
-            || mg(3, 0) | mg(3, 1) | mg(3, 2) | mg(3, 3) | mg(3, 4) | mg(3, 5) | mg(3, 6) || $$
+         val md: Matrix[4, 7, Int] =
+            ||[4, 7, Int] || mg(0, 0) | mg(0, 1) | mg(0, 2) | mg(0, 3) | mg(0, 4) | mg(0, 5) |
+               mg(0, 6) || $ || mg(1, 0) | mg(1, 1) | mg(1, 2) | mg(1, 3) | mg(1, 4) | mg(1, 5) |
+               mg(1, 6) || $ || mg(2, 0) | mg(2, 1) | mg(2, 2) | mg(2, 3) | mg(2, 4) | mg(2, 5) |
+               mg(2, 6) || $ || mg(3, 0) | mg(3, 1) | mg(3, 2) | mg(3, 3) | mg(3, 4) | mg(3, 5) |
+               mg(3, 6) || $$
 
          md === mg shouldBe true
       }

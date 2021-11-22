@@ -5,9 +5,9 @@ import matr.util.RowMajorIndex
 import scala.reflect.ClassTag
 
 case class DefaultDenseMatrix[R <: Int, C <: Int, T]
-      (private val elements: Array[T])
-      (using Matrix.Requirements.NonNegativeDimensions[R, C])
-      (using vr: ValueOf[R], vc: ValueOf[C])
+         (private val elements: Array[T])
+         (using Matrix.Requirements.NonNegativeDimensions[R, C])
+         (using vr: ValueOf[R], vc: ValueOf[C])
     extends Matrix[R, C, T]:
    lhs =>
 

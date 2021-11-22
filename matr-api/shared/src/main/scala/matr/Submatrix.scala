@@ -28,10 +28,13 @@ trait Submatrix[RowIdxTL <: Int,
                 C <: Int,
                 T
 ]
-      (using Submatrix.SliceOK[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C] =:= true)
-      (using
-       Matrix.Requirements.NonNegativeDimensions[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1]
-      ):
+         (using Submatrix.SliceOK[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C] =:= true)
+         (using
+          Matrix.Requirements.NonNegativeDimensions[
+             RowIdxBR - RowIdxTL + 1,
+             ColIdxBR - ColIdxTL + 1
+          ]
+         ):
 
    def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]
 
@@ -44,7 +47,5 @@ object Submatrix:
                 R <: Int,
                 C <: Int
    ] =
-      RowIdxTL >= 0 && RowIdxTL + 1 < R &&
-         ColIdxTL >= 0 && ColIdxTL + 1 < C &&
-         RowIdxBR >= RowIdxTL && RowIdxBR < R &&
-         ColIdxBR >= ColIdxTL && ColIdxBR < C
+      RowIdxTL >= 0 && RowIdxTL + 1 < R && ColIdxTL >= 0 && ColIdxTL + 1 < C &&
+         RowIdxBR >= RowIdxTL && RowIdxBR < R && ColIdxBR >= ColIdxTL && ColIdxBR < C
