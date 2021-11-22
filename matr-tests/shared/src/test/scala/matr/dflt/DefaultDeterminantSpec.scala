@@ -35,7 +35,13 @@ class DefaultDeterminantSpec extends MatrFlatSpec:
          val (a, b, c) = (m(0, 0), m(0, 1), m(0, 2))
          val (d, e, f) = (m(1, 0), m(1, 1), m(1, 2))
          val (g, h, i) = (m(2, 0), m(2, 1), m(2, 2))
-         val resExp: Int = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+         val resExp: Int =
+            a *
+               (e * i - f * h) -
+               b *
+               (d * i - f * g) +
+               c *
+               (d * h - e * g)
 
          val res = determinant.det(m)
 

@@ -53,15 +53,17 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
 
    /** Creates a Matrix of ones.
      */
-   def ones: Matrix[R, C, T] =
-      tabulate((_, _) => num.one)
+   def ones: Matrix[R, C, T] = tabulate((_, _) => num.one)
 
    /** Creates the identity Matrix.
      */
-   def identity(using Matrix.Requirements.IsSquare[R, C] =:= true): Matrix[R, C, T] =
-      tabulate { (rowIdx, colIdx) =>
-         if rowIdx == colIdx then num.one else num.zero
-      }
+   def identity(using Matrix.Requirements.IsSquare[R, C] =:= true): Matrix[R, C, T] = tabulate {
+      (rowIdx, colIdx) =>
+         if rowIdx == colIdx then
+            num.one
+         else
+            num.zero
+   }
 
    /** Creates a Matrix with the specified elements that are structured row by row by tuples.
      *
@@ -81,13 +83,13 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
      * ```
      */
    def fromTuple[MatrixTuple <: Tuple, RowTuple <: Tuple]
-         (matrixTuple: MatrixTuple)
-         (using
-          matrixReader: MatrixTupleReader[MatrixTuple, RowTuple],
-          rowReader: RowTupleReader[RowTuple, T]
-         )
-         (using Tuple.Size[MatrixTuple] =:= R, Tuple.Size[RowTuple] =:= C)
-         : Matrix[R, C, T] =
+            (matrixTuple: MatrixTuple)
+            (using
+             matrixReader: MatrixTupleReader[MatrixTuple, RowTuple],
+             rowReader: RowTupleReader[RowTuple, T]
+            )
+            (using Tuple.Size[MatrixTuple] =:= R, Tuple.Size[RowTuple] =:= C)
+            : Matrix[R, C, T] =
       val buildr: MatrixFactory.Builder[R, C, T] = builder
       val setElem: (Int, Int, T) => Unit =
          (rowIdx, colIdx, elem) => buildr.update(rowIdx, colIdx, elem)

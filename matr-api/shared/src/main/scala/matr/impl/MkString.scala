@@ -6,13 +6,15 @@ import scala.collection.mutable
 private[matr] object MkString:
 
    inline def apply[R <: Int, C <: Int, T](m: Matrix[R, C, T], elemToString: T => String): String =
-      val (colWidths: Array[Int], rowMajorStrings: Array[Array[String]]) =
-         preprocessMatrix(m, elemToString)
+      val (colWidths: Array[Int], rowMajorStrings: Array[Array[String]]) = preprocessMatrix(
+         m,
+         elemToString
+      )
       renderMatrix(m.rowDim, m.colDim, colWidths, rowMajorStrings)
 
    inline private def preprocessMatrix[R <: Int, C <: Int, T]
-         (m: Matrix[R, C, T], elemToString: T => String)
-         : (Array[Int], Array[Array[String]]) =
+            (m: Matrix[R, C, T], elemToString: T => String)
+            : (Array[Int], Array[Array[String]]) =
       val colWidths: Array[Int] = new Array(m.colDim)
       val rowMajorStrings: Array[Array[String]] = Array.ofDim(m.rowDim, m.colDim)
       var c: Int = 0
@@ -29,42 +31,48 @@ private[matr] object MkString:
       (colWidths, rowMajorStrings)
 
    inline private def renderMatrix
-         (rowDim: Int, colDim: Int, colWidths: Array[Int], rowMajorStrings: Array[Array[String]])
-         : String =
+            (rowDim: Int, colDim: Int, colWidths: Array[Int], rowMajorStrings: Array[Array[String]])
+            : String =
       val builder = new StringBuilder
-      if rowDim == 1 then renderSingleRowMatrix(builder, colDim, rowMajorStrings)
-      else renderMultiRowMatrix(builder, rowDim, colDim, colWidths, rowMajorStrings)
+      if rowDim == 1 then
+         renderSingleRowMatrix(builder, colDim, rowMajorStrings)
+      else
+         renderMultiRowMatrix(builder, rowDim, colDim, colWidths, rowMajorStrings)
       builder.result
 
    inline private def renderSingleRowMatrix
-         (builder: StringBuilder, colDim: Int, rowMajorStrings: Array[Array[String]])
-         : Unit =
+            (builder: StringBuilder, colDim: Int, rowMajorStrings: Array[Array[String]])
+            : Unit =
       builder += '('
       var colIdx: Int = 0
       while colIdx < colDim do
          builder ++= rowMajorStrings(0)(colIdx)
-         if colIdx < colDim - 1 then builder ++= ", "
+         if colIdx < colDim - 1 then
+            builder ++= ", "
          colIdx = colIdx + 1
       builder += ')'
 
    inline private def renderMultiRowMatrix
-         (builder: StringBuilder,
-          rowDim: Int,
-          colDim: Int,
-          colWidths: Array[Int],
-          rowMajorStrings: Array[Array[String]]
-         )
-         : Unit =
+            (builder: StringBuilder,
+             rowDim: Int,
+             colDim: Int,
+             colWidths: Array[Int],
+             rowMajorStrings: Array[Array[String]]
+            )
+            : Unit =
       builder += PAREN_TOP_LEFT
       var rowIdx: Int = 0
       while rowIdx < rowDim do
-         if rowIdx > 0 && rowIdx < rowDim - 1 then builder += PAREN_MID_LEFT
-         if rowIdx == rowDim - 1 then builder += PAREN_BTM_LEFT
+         if rowIdx > 0 && rowIdx < rowDim - 1 then
+            builder += PAREN_MID_LEFT
+         if rowIdx == rowDim - 1 then
+            builder += PAREN_BTM_LEFT
          var colIdx: Int = 0
          while colIdx < colDim do
             builder ++= " " * (colWidths(colIdx) - rowMajorStrings(rowIdx)(colIdx).size)
             builder ++= rowMajorStrings(rowIdx)(colIdx)
-            if colIdx < colDim - 1 then builder ++= ", "
+            if colIdx < colDim - 1 then
+               builder ++= ", "
             colIdx = colIdx + 1
          if rowIdx == 0 then
             builder += PAREN_TOP_RIGHT
