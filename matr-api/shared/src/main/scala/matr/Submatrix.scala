@@ -28,24 +28,25 @@ trait Submatrix[RowIdxTL <: Int,
                 C <: Int,
                 T
 ]
-         (using Submatrix.SliceOK[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C] =:= true)
          (using
+          Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
           Matrix.Requirements.NonNegativeDimensions[
              RowIdxBR - RowIdxTL + 1,
              ColIdxBR - ColIdxTL + 1
           ]
          ):
-
    def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]
 
 object Submatrix:
 
-   type SliceOK[RowIdxTL <: Int,
-                ColIdxTL <: Int,
-                RowIdxBR <: Int,
-                ColIdxBR <: Int,
-                R <: Int,
-                C <: Int
-   ] =
-      RowIdxTL >= 0 && RowIdxTL + 1 < R && ColIdxTL >= 0 && ColIdxTL + 1 < C &&
-         RowIdxBR >= RowIdxTL && RowIdxBR < R && ColIdxBR >= ColIdxTL && ColIdxBR < C
+   object Requirements:
+
+      type WindowWithinShape[RowIdxTL <: Int,
+                             ColIdxTL <: Int,
+                             RowIdxBR <: Int,
+                             ColIdxBR <: Int,
+                             R <: Int,
+                             C <: Int
+      ] =
+         (RowIdxTL >= 0 && RowIdxTL + 1 < R && ColIdxTL >= 0 && ColIdxTL + 1 < C &&
+            RowIdxBR >= RowIdxTL && RowIdxBR < R && ColIdxBR >= ColIdxTL && ColIdxBR < C) =:= true
