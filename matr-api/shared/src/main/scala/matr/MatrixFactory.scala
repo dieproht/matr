@@ -57,7 +57,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
 
    /** Creates the identity Matrix.
      */
-   def identity(using Matrix.Requirements.IsSquare[R, C] =:= true): Matrix[R, C, T] = tabulate {
+   def identity(using Matrix.Requirements.IsSquare[R, C]): Matrix[R, C, T] = tabulate {
       (rowIdx, colIdx) =>
          if rowIdx == colIdx then
             num.one
