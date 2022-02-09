@@ -7,6 +7,7 @@ trait DefaultMatrixOps
       DefaultMatrixMultiplication,
       DefaultMatrixSubtraction,
       DefaultSubmatrix,
-      DefaultTranspose
+      DefaultTranspose,
+      DefaultInverse
 
 object DefaultMatrixOps extends DefaultMatrixOps

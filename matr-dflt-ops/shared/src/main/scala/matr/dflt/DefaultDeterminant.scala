@@ -14,7 +14,7 @@ trait DefaultDeterminant:
             (using Matrix.Requirements.IsSquare[R, C])
             : Determinant[R, C, T] with
 
-      def det(m: Matrix[R, C, T]): T = calcDet(m.apply, m.rowDim)
+      def det(m: M): T = calcDet(m.apply, m.rowDim)
 
       private def calcDet(get: (Int, Int) => T, dim: Int): T =
          if dim == 1 then
