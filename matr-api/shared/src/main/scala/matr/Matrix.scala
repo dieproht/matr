@@ -115,6 +115,8 @@ trait Matrix[R <: Int, C <: Int, T]
      */
    final def det(using d: Determinant[R, C, T]): T = d.det(this)
 
+   final def inv(using i: Inverse[R, C, T]): This = i.inv(this)
+
    /** Renders this Matrix to a String using the elements' `toString` method.
      */
    def mkString: String = impl.MkString(this, _.toString)
