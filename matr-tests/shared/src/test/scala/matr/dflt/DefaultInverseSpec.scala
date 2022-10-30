@@ -1,82 +1,56 @@
 package matr.dflt
 
-import matr.MatrFlatSpec
+// import matr.ArbitraryMatrix
+import matr.GenNumericMatrix
 import matr.Inverse
-
-import scala.math
+import matr.MatrFlatSpec
 import matr.Matrix
 import matr.MatrixFactory
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
 import matr.std.StandardOps.given
-import scala.collection.immutable.Range.BigDecimal.apply
-import matr.MatrixEquality
+import org.scalacheck.Gen
+
+import scala.math
+import scala.util.Random
+
+import math.Numeric.Implicits.infixNumericOps
 
 class DefaultInverseSpec extends MatrFlatSpec:
 
    "DefaultInverse" should "return correct inverse for 3x3 Matrix" in {
 
-      val inverse: Inverse[3, 3, BigDecimal] = summon[Inverse[3, 3, BigDecimal]]
-
-      val m = MatrixFactory[3, 3, BigDecimal].fromTuple( //
-         (bd(3), bd(0), bd(2)), //
-         (bd(2), bd(1), bd(-2)),
-         (bd(0), bd(1), bd(1))
-      )
-
-      val inv = m.inv
-
-      val m2 = m dot inv
-
-      // println(inv.mkString)
-      println(m2.mkString)
-
-   }
-
-   it should "return correct inverse for 3x3 Matrix (2)" in {
-
-      val inverse: Inverse[3, 3, BigDecimal] = summon[Inverse[3, 3, BigDecimal]]
-
-      val m = MatrixFactory[3, 3, BigDecimal].fromTuple( //
-         (bd(1), bd(2), bd(3)), //
-         (bd(3), bd(2), bd(1)),
-         (bd(2), bd(1), bd(3))
-      )
-
-      val inv = m.inv
-
-      val m2 = m dot inv
+      val num = Numeric[BigDecimal]
 
       val id = MatrixFactory[3, 3, BigDecimal].identity
 
-      // println(inv.mkString)
-      println(m2.mkString)
+      val gen = GenNumericMatrix[3, 3, Int](1, 100).map { m =>
+         m.map { vint =>
+            val neg = Random.nextBoolean
+            val vdec = BigDecimal(vint)
+            if neg then
+               vdec * -1
+            else
+               vdec
+         }
+      }
 
-      (m2.===(id)(using DefaultInverseSpec.bdeq)) shouldEqual true
-
-      /*
-
-      (-0.416667  | 0.25  | 0.333333
-        0.583333  | 0.25  | -0.666667
-        0.0833333 | -0.25 | 0.333333)
-
-       */
+      forAll(gen) { (m1: Matrix[3, 3, BigDecimal]) =>
+         try
+            val mInv = m1.inv
+            val m2 = m1 dot mInv
+            matricesEqualApproximately(id, m2) shouldEqual true
+         catch
+            case MatrixNotInvertibleException() =>
+               succeed
+      }
    }
 
-   private def bd(v: Int) = BigDecimal(v)
-
-object DefaultInverseSpec:
-   // given [R <: Int, C <: Int, T](given Numeric[T]): MatrixEquality[R, C, T] with
-   //    val epsilon = 0.001d
-   //    val num = summon[Numeric[T]]
-   //    def matricesEqual(lhs: M, rhs: M): Boolean =
-   //       lhs.fold(true) { (curr, rowIdx, colIdx) =>
-   //          curr && math.abs(lhs(rowIdx, colIdx) - rhs(rowIdx, colIdx)).toDouble < epsilon
-   //       }
-   given bdeq: MatrixEquality[3, 3, BigDecimal] with
-      val epsilon = 0.001d
-      def matricesEqual(lhs: M, rhs: M): Boolean =
-         lhs.fold(true) { (curr, rowIdx, colIdx) =>
-            println("comp")
-            curr && math.abs(lhs(rowIdx, colIdx).toDouble - rhs(rowIdx, colIdx).toDouble) < epsilon
-         }
+   private def matricesEqualApproximately[T, M <: Matrix[? <: Int, ? <: Int, T]]
+            (lhs: M, rhs: M)
+            (using Numeric[T])
+            : Boolean =
+      val epsilon = 0.001
+      lhs.fold(true) { (curr, rowIdx, colIdx) =>
+         curr && math.abs(lhs(rowIdx, colIdx).toDouble - rhs(rowIdx, colIdx).toDouble) < epsilon
+      }
