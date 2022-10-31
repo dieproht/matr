@@ -1,6 +1,7 @@
 package matr.std
 
 import matr.ElementMultiplication
+import matr.ElementDivision
 
 trait StandardBigDecimalOps:
 
@@ -22,6 +23,10 @@ trait StandardBigDecimalOps:
 
    given bigDecimalLongMultiplication: ElementMultiplication[BigDecimal, Long] with
       def times(lhs: BigDecimal, rhs: Long): Out = lhs * rhs
+      type Out = BigDecimal
+
+   given bigDecimalDivision: ElementDivision[BigDecimal, BigDecimal] with
+      def div(lhs: BigDecimal, rhs: BigDecimal): Out = lhs / rhs
       type Out = BigDecimal
 
 object StandardBigDecimalOps extends StandardBigDecimalOps

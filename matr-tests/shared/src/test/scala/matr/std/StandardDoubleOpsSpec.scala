@@ -1,5 +1,6 @@
 package matr.std
 
+import matr.ElementDivision
 import matr.ElementMultiplication
 import matr.MatrFlatSpec
 import matr.std.StandardDoubleOps.given
@@ -38,5 +39,15 @@ class StandardDoubleOpsSpec extends MatrFlatSpec:
       val doubleLongMul = summon[ElementMultiplication[Double, Long]]
       forAll { (a: Double, b: Long) =>
          doubleLongMul.times(a, b) shouldEqual (a * b)
+      }
+   }
+
+   "doubleDivision" should "divide two Doubles" in {
+      val doubleDiv = summon[ElementDivision[Double, Double]]
+      forAll { (a: Double, b: Double) =>
+         if b != 0d then
+            doubleDiv.div(a, b) shouldEqual (a / b)
+         else
+            succeed
       }
    }
