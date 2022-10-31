@@ -228,3 +228,27 @@ class MatrixSpec extends MatrFlatSpec:
          mResult shouldEqual tcResult
       }
    }
+
+   "Calculating the inverse" should "require that this Matrix is squared (1)" in {
+      assertCompiles("""val m: Matrix[3, 3, BigDecimal] = ???
+                        val i: Matrix[3, 3, BigDecimal] = m.inv""")
+   }
+
+   it should "require that this Matrix is squared (2)" in {
+      assertDoesNotCompile("""val m: Matrix[4, 5, BigDecimal] = ???
+                              val i: Matrix[4, 5, BigDecimal] = m.inv""")
+   }
+
+   it should "give same result as the corresponding type class" in {
+
+      val gen = GenNumericMatrix[2, 2, Int](1, 100).map { m =>
+         m.map(BigDecimal(_))
+      }
+
+      val invTC = summon[Inverse[2, 2, BigDecimal]]
+      forAll(gen) { (m: Matrix[2, 2, BigDecimal]) =>
+         val tcResult: Matrix[2, 2, BigDecimal] = invTC.inv(m)
+         val mResult: Matrix[2, 2, BigDecimal] = m.inv
+         (mResult === tcResult) shouldBe true
+      }
+   }

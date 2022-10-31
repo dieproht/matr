@@ -1,6 +1,7 @@
 package matr.std
 
 import matr.ElementMultiplication
+import matr.ElementDivision
 import matr.MatrFlatSpec
 import matr.std.StandardBigDecimalOps.given
 
@@ -38,5 +39,12 @@ class StandardBigDecimalOpsSpec extends MatrFlatSpec:
       val mul = summon[ElementMultiplication[BigDecimal, Long]]
       forAll { (a: BigDecimal, b: Long) =>
          mul.times(a, b) shouldEqual (a * b)
+      }
+   }
+
+   "bigDecimalDivision" should "divide two BigDecimals" in {
+      val bigDecimalDiv = summon[ElementDivision[BigDecimal, BigDecimal]]
+      forAll { (a: BigDecimal, b: BigDecimal) =>
+         bigDecimalDiv.div(a, b) shouldEqual (a / b)
       }
    }

@@ -20,11 +20,11 @@ class DefaultInverseSpec extends MatrFlatSpec:
 
    "DefaultInverse" should "return correct inverse for 1x1 Matrix" in testInverse[1]
 
-   "DefaultInverse" should "return correct inverse for 2x2 Matrix" in testInverse[2]
+   it should "return correct inverse for 2x2 Matrix" in testInverse[2]
 
-   "DefaultInverse" should "return correct inverse for 3x3 Matrix" in testInverse[3]
+   it should "return correct inverse for 3x3 Matrix" in testInverse[3]
 
-   "DefaultInverse" should "return correct inverse for 4x4 Matrix" in testInverse[4]
+   it should "return correct inverse for 4x4 Matrix" in testInverse[4]
 
    private def testInverse[N <: Int]
             (using Matrix.Requirements.NonNegativeDimensions[N, N])
