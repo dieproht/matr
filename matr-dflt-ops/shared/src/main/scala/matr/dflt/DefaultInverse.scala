@@ -14,10 +14,7 @@ trait DefaultInverse:
 
    given defaultInverse[R <: Int, C <: Int, T]
             (using Matrix.Requirements.IsSquare[R, C])
-            (using Numeric[T])
-            (using ElementMultiplication.Aux[T, T, T])
-            (using ElementDivision.Aux[T, T, T])
-            (using MatrixFactory[R, C, T])
+            (using ElementMultiplication.Aux[T, T, T], ElementDivision.Aux[T, T, T], Numeric[T], MatrixFactory[R, C, T])
             : Inverse[R, C, T] with
 
       def inv(m: M): M =
