@@ -26,7 +26,7 @@ trait StandardDoubleOps:
       type Out = Double
 
    given doubleDivision: ElementDivision[Double, Double] with
-      def dividedBy(lhs: Double, rhs: Double): Out = lhs / rhs
+      def div(lhs: Double, rhs: Double): Out = lhs / rhs
       type Out = Double
 
 object StandardDoubleOps extends StandardDoubleOps

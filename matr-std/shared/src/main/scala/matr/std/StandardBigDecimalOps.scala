@@ -26,7 +26,7 @@ trait StandardBigDecimalOps:
       type Out = BigDecimal
 
    given bigDecimalDivision: ElementDivision[BigDecimal, BigDecimal] with
-      def dividedBy(lhs: BigDecimal, rhs: BigDecimal): Out = lhs / rhs
+      def div(lhs: BigDecimal, rhs: BigDecimal): Out = lhs / rhs
       type Out = BigDecimal
 
 object StandardBigDecimalOps extends StandardBigDecimalOps

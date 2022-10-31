@@ -6,7 +6,10 @@ import math.Numeric.Implicits.infixNumericOps
 import matr.MatrixFactory
 import matr.ElementDivision
 import matr.ElementMultiplication
+import matr.MatrixNotInvertibleException
 
+/** Default determinant implementation based on Gauss Jordan method. 
+  */
 trait DefaultInverse:
 
    given defaultInverse[R <: Int, C <: Int, T]
@@ -37,8 +40,8 @@ trait DefaultInverse:
              swapRows(b, j, p)
            val f = a(j, j)
            for k <- 0 until n do 
-             a(j, k) = div.dividedBy(a(j, k), f)
-             b(j, k) = div.dividedBy(b(j, k), f)
+             a(j, k) = div.div(a(j, k), f)
+             b(j, k) = div.div(b(j, k), f)
            for i <- 0 until n do 
              if i != j then
                val g = a(i, j)
@@ -48,12 +51,11 @@ trait DefaultInverse:
 
          b.result
 
-      private def swapRows(mb: MatrixFactory.Builder[R, C, T], r1: Int, r2: Int): Unit = 
+      private def swapRows(mb: MatrixFactory.Builder[R, C, T], r1Idx: Int, r2Idx: Int): Unit = 
         for idx <- 0 until mb.colDim do 
-          val b = mb(r1, idx)
-          mb(r1, idx) = mb(r2, idx)
-          mb(r2, idx) = b
+          val buf = mb(r1Idx, idx)
+          mb(r1Idx, idx) = mb(r2Idx, idx)
+          mb(r2Idx, idx) = buf
 
-case class MatrixNotInvertibleException() extends ArithmeticException("Matrix not invertible")
 
 object DefaultInverse extends DefaultInverse
