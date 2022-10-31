@@ -247,13 +247,13 @@ class MatrixSpec extends MatrFlatSpec:
 
       val invTC = summon[Inverse[2, 2, BigDecimal]]
 
-      try
-         forAll(gen) { (m: Matrix[2, 2, BigDecimal]) =>
+      forAll(gen) { (m: Matrix[2, 2, BigDecimal]) =>
+         try
             val tcResult: Matrix[2, 2, BigDecimal] = invTC.inv(m)
             val mResult: Matrix[2, 2, BigDecimal] = m.inv
             (mResult === tcResult) shouldBe true
-         }
-      catch
-         case MatrixNotInvertibleException() =>
-            succeed
+         catch
+            case MatrixNotInvertibleException() =>
+               succeed
+      }
    }
