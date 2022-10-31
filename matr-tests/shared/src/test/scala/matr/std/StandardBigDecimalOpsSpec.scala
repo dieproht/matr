@@ -45,6 +45,9 @@ class StandardBigDecimalOpsSpec extends MatrFlatSpec:
    "bigDecimalDivision" should "divide two BigDecimals" in {
       val bigDecimalDiv = summon[ElementDivision[BigDecimal, BigDecimal]]
       forAll { (a: BigDecimal, b: BigDecimal) =>
-         bigDecimalDiv.div(a, b) shouldEqual (a / b)
+         if b != BigDecimal(0) then
+            bigDecimalDiv.div(a, b) shouldEqual (a / b)
+         else
+            succeed
       }
    }
