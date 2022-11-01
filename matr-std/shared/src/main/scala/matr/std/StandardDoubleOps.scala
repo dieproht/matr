@@ -1,5 +1,6 @@
 package matr.std
 
+import matr.ElementDivision
 import matr.ElementMultiplication
 
 trait StandardDoubleOps:
@@ -22,6 +23,10 @@ trait StandardDoubleOps:
 
    given doubleLongMultiplication: ElementMultiplication[Double, Long] with
       def times(lhs: Double, rhs: Long): Out = lhs * rhs
+      type Out = Double
+
+   given doubleDivision: ElementDivision[Double, Double] with
+      def div(lhs: Double, rhs: Double): Out = lhs / rhs
       type Out = Double
 
 object StandardDoubleOps extends StandardDoubleOps
