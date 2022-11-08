@@ -1,15 +1,19 @@
 package matr.dflt
 
+import matr.ElementDivision
+import matr.ElementMultiplication
 import matr.GenNumericMatrix
 import matr.Inverse
 import matr.MatrFlatSpec
 import matr.Matrix
 import matr.MatrixFactory
+import matr.MatrixNotInvertibleException
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
 import matr.std.StandardOps.given
 import org.scalacheck.Gen
-import matr.MatrixNotInvertibleException
+import spire.compat.numeric
+import spire.math.Rational
 
 import scala.math
 import scala.util.Random
@@ -17,6 +21,14 @@ import scala.util.Random
 import math.Numeric.Implicits.infixNumericOps
 
 class DefaultInverseSpec extends MatrFlatSpec:
+
+   given rationalMultiplication: ElementMultiplication[Rational, Rational] with
+      def times(lhs: Rational, rhs: Rational): Out = lhs * rhs
+      type Out = Rational
+
+   given rationalDivision: ElementDivision[Rational, Rational] with
+      def div(lhs: Rational, rhs: Rational): Out = lhs / rhs
+      type Out = Rational
 
    "DefaultInverse" should "return correct inverse for 1x1 Matrix" in testInverse[1]
 
@@ -28,39 +40,30 @@ class DefaultInverseSpec extends MatrFlatSpec:
 
    private def testInverse[N <: Int]
             (using Matrix.Requirements.NonNegativeDimensions[N, N])
-            (using MatrixFactory[N, N, BigDecimal])
+            (using MatrixFactory[N, N, Rational])
             (using ValueOf[N])
             (using Matrix.Requirements.IsSquare[N, N]) =
-      val num = Numeric[BigDecimal]
 
-      val id = MatrixFactory[N, N, BigDecimal].identity
+      val num = Numeric[Rational]
 
-      val gen = GenNumericMatrix[N, N, Int](1, 100).map { m =>
+      val id = MatrixFactory[N, N, Rational].identity
+
+      val gen = GenNumericMatrix[N, N, Int](1, 10).map { m =>
          m.map { vint =>
             val neg = Random.nextBoolean
-            val vdec = BigDecimal(vint)
             if neg then
-               vdec * -1
+               Rational(-1 * vint, 1)
             else
-               vdec
+               Rational(vint, 1)
          }
       }
 
-      forAll(gen) { (m1: Matrix[N, N, BigDecimal]) =>
+      forAll(gen) { (m1: Matrix[N, N, Rational]) =>
          try
             val mInv = m1.inv
             val m2 = m1 dot mInv
-            matricesEqualApproximately(id, m2) shouldEqual true
+            (m2 === id) shouldEqual true
          catch
             case MatrixNotInvertibleException() =>
                succeed
-      }
-
-   private def matricesEqualApproximately[T, M <: Matrix[? <: Int, ? <: Int, T]]
-            (lhs: M, rhs: M)
-            (using Numeric[T])
-            : Boolean =
-      val epsilon = 0.001
-      lhs.fold(true) { (curr, rowIdx, colIdx) =>
-         curr && math.abs(lhs(rowIdx, colIdx).toDouble - rhs(rowIdx, colIdx).toDouble) < epsilon
       }
