@@ -87,7 +87,7 @@ lazy val matr_tests = crossProject(JVMPlatform)
       libraryDependencies ++=
          Seq(
             "org.typelevel" %% "spire" % "0.18.0" % Test,
-            "org.scalatest" %% "scalatest" % "3.2.14" % Test,
+            "org.scalatest" %% "scalatest" % "3.2.15" % Test,
             "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
          ),
       publish / skip := true
