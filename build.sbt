@@ -1,4 +1,4 @@
-val _scalaVersions: Seq[String] = Seq("3.2.2")
+val _scalaVersions: Seq[String] = Seq("3.3.0")
 
 ThisBuild / organization := "io.github.dieproht"
 ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
@@ -87,7 +87,7 @@ lazy val matr_tests = crossProject(JVMPlatform)
       libraryDependencies ++=
          Seq(
             "org.typelevel" %% "spire" % "0.18.0" % Test,
-            "org.scalatest" %% "scalatest" % "3.2.15" % Test,
+            "org.scalatest" %% "scalatest" % "3.2.16" % Test,
             "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
          ),
       publish / skip := true
