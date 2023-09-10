@@ -1,4 +1,4 @@
-val _scalaVersions: Seq[String] = Seq("3.3.0")
+val _scalaVersions: Seq[String] = Seq("3.3.1")
 
 ThisBuild / organization := "io.github.dieproht"
 ThisBuild / homepage := Some(url("https://github.com/dieproht/matr"))
