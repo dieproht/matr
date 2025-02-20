@@ -16,8 +16,8 @@ trait DefaultMatrixFactory:
 
       private val MIN_DENSE_FILL: Float = 0.5
 
-      def builder: MatrixFactory.Builder[R, C, T] =
-         new MatrixFactory.Builder:
+      def builder: Matrix.Builder[R, C, T] =
+         new Matrix.Builder:
             private var elemMap: mutable.Map[(Int, Int), T] = mutable.Map.empty
 
             private var elemArr: Array[T] = null

@@ -143,7 +143,7 @@ trait Matrix[R <: Int, C <: Int, T]
    /** Allows to easily "modify" this Matrix by creating a `Builder` initialized with the values of
      * this Matrix.
      */
-   def modify(using mf: MatrixFactory[R, C, T]): MatrixFactory.Builder[R, C, T] = impl.Modify(this)
+   def modify(using mf: MatrixFactory[R, C, T]): Matrix.Builder[R, C, T] = impl.Modify(this)
 
    /** Iterates over this Matrix by invoking the specified operation with each element's index.
      */
@@ -162,6 +162,24 @@ trait Matrix[R <: Int, C <: Int, T]
    def fold[S](start: S)(op: (S, Int, Int) => S): S = impl.Fold(this, start, op)
 
 object Matrix:
+
+   /** A `Builder` is a "Matrix under construction" that itself forms a (mutable) Matrix. Utilizing
+     * `Builder` is the preferred way of creating new Matrices in Matrix operations.
+     *
+     * Invoking the same `Builder` instance multiple times is OK, but letting a `Builder` leave a
+     * local scope is not OK (it's mutable!).
+     *
+     * Implementations of this trait must return zero for uninitialized element positions.
+     */
+   trait Builder[R <: Int, C <: Int, T] extends Matrix[R, C, T]:
+
+      /** Sets the specified element at the specified position.
+        */
+      def update(rowIdx: Int, colIdx: Int, v: T): this.type
+
+      /** Creates the Matrix resulting from this `Builder`.
+        */
+      def result: Matrix[R, C, T]
 
    object Requirements:
 

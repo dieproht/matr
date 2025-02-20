@@ -6,8 +6,9 @@ import matr.util.RowMajorIndex
 
 import scala.compiletime.ops.any.==
 
-/** Central entry point for creating Matrices. Modules implementing the `Matrix` trait should also
-  * provide an instance of this type class.
+/** Central entry point for creating Matrices.
+  *
+  * Modules implementing the `Matrix` trait should also provide an instance of this type class.
   */
 trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], ValueOf[C]):
 
@@ -17,7 +18,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
 
    /** Returns a new `Builder` instance.
      */
-   def builder: MatrixFactory.Builder[R, C, T]
+   def builder: Matrix.Builder[R, C, T]
 
    /** Creates a Matrix containing the specified elements, assuming row-major order. Dimensions will
      * be checked at runtime.
@@ -27,7 +28,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
          elements.length == rowDim * colDim,
          s"Size of given element collection must be ${rowDim * colDim}, but was ${elements.size}"
       )
-      val buildr: MatrixFactory.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = builder
       var idx: Int = 0
       while (idx < elements.length) do
          val (rowIdx, colIdx) = RowMajorIndex.fromIdx(idx, colDim)
@@ -41,7 +42,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
      *   function returning the element at the specified position (row index, column index)
      */
    def tabulate(fillElem: (Int, Int) => T): Matrix[R, C, T] =
-      val buildr: MatrixFactory.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = builder
       buildr.iterate { (rowIdx, colIdx) =>
          buildr(rowIdx, colIdx) = fillElem(rowIdx, colIdx)
       }
@@ -65,7 +66,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
             num.zero
    }
 
-   /** Creates a Matrix with the specified elements that are structured row by row by tuples.
+   /** Creates a Matrix with the specified elements that are structured row by row from tuples.
      *
      * Dimensions will be checked at compile-time.
      *
@@ -90,7 +91,7 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
             )
             (using Tuple.Size[MatrixTuple] =:= R, Tuple.Size[RowTuple] =:= C)
             : Matrix[R, C, T] =
-      val buildr: MatrixFactory.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = builder
       val setElem: (Int, Int, T) => Unit =
          (rowIdx, colIdx, elem) => buildr.update(rowIdx, colIdx, elem)
       val setRow: (Int, RowTuple) => Unit =
@@ -99,25 +100,6 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
       buildr.result
 
 object MatrixFactory:
-
-   /** A `Builder` is a "Matrix under construction" that itself forms a (mutable) Matrix. Utilizing
-     * `Builder` is the preferred way of creating new Matrices in Matrix operations.
-     *
-     * _One_ instance of a `Builder` is used to create _one_ Matrix. This means that invoking the
-     * same `Builder` instance multiple times is OK, but letting a `Builder` leave a local scope is
-     * not OK (it's mutable!).
-     *
-     * Implementations of this trait must return zero for uninitialized element positions.
-     */
-   trait Builder[R <: Int, C <: Int, T] extends Matrix[R, C, T]:
-
-      /** Sets the specified element at the specified position.
-        */
-      def update(rowIdx: Int, colIdx: Int, v: T): this.type
-
-      /** Creates the Matrix resulting from this `Builder`.
-        */
-      def result: Matrix[R, C, T]
 
    /** Returns the implicitly available `MatrixFactory`.
      */
