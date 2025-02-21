@@ -29,8 +29,12 @@ class MatrixModifySpec extends MatrFlatSpec:
          buildr(0, 1) = e01new
          val mRes: Matrix[2, 2, Double] = buildr.result
 
-         val mExp: Matrix[2, 2, Double] = MatrixFactory[2, 2, Double]
-            .rowMajor(m(0, 0), e01new, m(1, 0), m(1, 1))
+         val mExp: Matrix[2, 2, Double] = MatrixFactory[2, 2, Double].rowMajor(
+            m(0, 0),
+            e01new,
+            m(1, 0),
+            m(1, 1)
+         )
 
          mRes === m shouldBe false
          mRes === mExp shouldBe true

@@ -19,8 +19,14 @@ class DefaultTransposeSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[2, 3, Int]] = ArbitraryMatrix[2, 3, Int]
 
       forAll { (m: Matrix[2, 3, Int]) =>
-         val resExp = MatrixFactory[3, 2, Int]
-            .rowMajor(m(0, 0), m(1, 0), m(0, 1), m(1, 1), m(0, 2), m(1, 2))
+         val resExp = MatrixFactory[3, 2, Int].rowMajor(
+            m(0, 0),
+            m(1, 0),
+            m(0, 1),
+            m(1, 1),
+            m(0, 2),
+            m(1, 2)
+         )
 
          val resTranspose = transpose.transpose(m)
 
