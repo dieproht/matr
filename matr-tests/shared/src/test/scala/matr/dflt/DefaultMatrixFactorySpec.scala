@@ -120,8 +120,17 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       val _0 = num.zero
       val _1 = num.one
 
-      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long]
-         .rowMajor(_0, _1, _0, _1, _0, _0, _1, _0, _1)
+      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(
+         _0,
+         _1,
+         _0,
+         _1,
+         _0,
+         _0,
+         _1,
+         _0,
+         _1
+      )
 
       m shouldBe a[DefaultSparseMatrix[3, 3, Long]]
    }
@@ -133,8 +142,17 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       val _0 = num.zero
       val _1 = num.one
 
-      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long]
-         .rowMajor(_0, _1, _0, _1, _1, _0, _1, _0, _1)
+      val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].rowMajor(
+         _0,
+         _1,
+         _0,
+         _1,
+         _1,
+         _0,
+         _1,
+         _0,
+         _1
+      )
 
       m shouldBe a[DefaultDenseMatrix[3, 3, Long]]
    }

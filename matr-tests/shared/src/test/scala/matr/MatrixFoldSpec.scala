@@ -94,5 +94,7 @@ class MatrixFoldSpec extends MatrFlatSpec:
          }
       }
 
-   private def genElements(size: Int): Gen[List[Int]] = Gen
-      .containerOfN[List, Int](size, Gen.chooseNum(-1000, 1000))
+   private def genElements(size: Int): Gen[List[Int]] = Gen.containerOfN[List, Int](
+      size,
+      Gen.chooseNum(-1000, 1000)
+   )

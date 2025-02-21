@@ -11,8 +11,9 @@ class MatrixMapSpec extends MatrFlatSpec:
 
    "Mapping a Matrix" should "require a function that takes the data type of the elements" in {
 
-      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-         .tabulate((_, _) => Random.nextDouble)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
+         Random.nextDouble
+      )
 
       val fn: Int => Double = _.toDouble
 
@@ -50,8 +51,14 @@ class MatrixMapSpec extends MatrFlatSpec:
 
          val mRes: Matrix[3, 2, Int] = m.map(fn)
 
-         val mExp: Matrix[3, 2, Int] = MatrixFactory[3, 2, Int]
-            .rowMajor(fn(m(0, 0)), fn(m(0, 1)), fn(m(1, 0)), fn(m(1, 1)), fn(m(2, 0)), fn(m(2, 1)))
+         val mExp: Matrix[3, 2, Int] = MatrixFactory[3, 2, Int].rowMajor(
+            fn(m(0, 0)),
+            fn(m(0, 1)),
+            fn(m(1, 0)),
+            fn(m(1, 1)),
+            fn(m(2, 0)),
+            fn(m(2, 1))
+         )
 
          mRes === mExp shouldBe true
       }

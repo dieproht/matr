@@ -23,9 +23,7 @@ trait DefaultDeterminant:
             calcDet2x2(get)
          else
             var current: T = num.zero
-            for
-               colIdx <- 0 until dim
-            do
+            for colIdx <- 0 until dim do
                val _get = excludeRowAndCol(0, colIdx, get)
                val coeff =
                   if colIdx % 2 == 0 then
