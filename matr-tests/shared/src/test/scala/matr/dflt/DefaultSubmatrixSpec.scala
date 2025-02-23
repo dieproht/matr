@@ -21,8 +21,14 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
          given Arbitrary[Matrix[8, 8, Double]] = ArbitraryMatrix[8, 8, Double]
 
          forAll { (m: Matrix[8, 8, Double]) =>
-            val resExp: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-               .rowMajor(m(2, 1), m(2, 2), m(2, 3), m(3, 1), m(3, 2), m(3, 3))
+            val resExp: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].rowMajor(
+               m(2, 1),
+               m(2, 2),
+               m(2, 3),
+               m(3, 1),
+               m(3, 2),
+               m(3, 3)
+            )
 
             val resSubmatrix = submatrix.submatrix(m)
 
@@ -54,8 +60,11 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
          given Arbitrary[Matrix[8, 8, Double]] = ArbitraryMatrix[8, 8, Double]
 
          forAll { (m: Matrix[8, 8, Double]) =>
-            val resExp: Matrix[1, 3, Double] = MatrixFactory[1, 3, Double]
-               .rowMajor(m(0, 2), m(0, 3), m(0, 4))
+            val resExp: Matrix[1, 3, Double] = MatrixFactory[1, 3, Double].rowMajor(
+               m(0, 2),
+               m(0, 3),
+               m(0, 4)
+            )
 
             val resSubmatrix = submatrix.submatrix(m)
 
@@ -71,8 +80,16 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
       given Arbitrary[Matrix[8, 8, Double]] = ArbitraryMatrix[8, 8, Double]
 
       forAll { (m: Matrix[8, 8, Double]) =>
-         val resExp: Matrix[8, 1, Double] = MatrixFactory[8, 1, Double]
-            .rowMajor(m(0, 0), m(1, 0), m(2, 0), m(3, 0), m(4, 0), m(5, 0), m(6, 0), m(7, 0))
+         val resExp: Matrix[8, 1, Double] = MatrixFactory[8, 1, Double].rowMajor(
+            m(0, 0),
+            m(1, 0),
+            m(2, 0),
+            m(3, 0),
+            m(4, 0),
+            m(5, 0),
+            m(6, 0),
+            m(7, 0)
+         )
 
          val resSubmatrix = submatrix.submatrix(m)
 
@@ -89,8 +106,16 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
          given Arbitrary[Matrix[8, 8, Double]] = ArbitraryMatrix[8, 8, Double]
 
          forAll { (m: Matrix[8, 8, Double]) =>
-            val resExp: Matrix[8, 1, Double] = MatrixFactory[8, 1, Double]
-               .rowMajor(m(0, 1), m(1, 1), m(2, 1), m(3, 1), m(4, 1), m(5, 1), m(6, 1), m(7, 1))
+            val resExp: Matrix[8, 1, Double] = MatrixFactory[8, 1, Double].rowMajor(
+               m(0, 1),
+               m(1, 1),
+               m(2, 1),
+               m(3, 1),
+               m(4, 1),
+               m(5, 1),
+               m(6, 1),
+               m(7, 1)
+            )
 
             val resSubmatrix = submatrix.submatrix(m)
 
