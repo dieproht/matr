@@ -203,3 +203,11 @@ object Matrix:
          rowIdx >= 0 && rowIdx < rowDim && colIdx >= 0 && colIdx < colDim,
          s"Given zero-based position ($rowIdx, $colIdx) not within shape ($rowDim, $colDim) of Matrix!"
       )
+
+// TODO move
+type MatrixContext[R <: Int, C <: Int, T] =
+   (ValueOf[R],
+    ValueOf[C],
+    Numeric[T],
+    Matrix.Requirements.NonNegativeDimensions[R, C]
+   ) ?=> Matrix.Builder[R, C, T]
