@@ -8,8 +8,11 @@ object ReadmeExamples extends App:
    import matr.MatrBundle.given
 
    // Create a Matrix from tuples
-   val a: Matrix[3, 4, Int] = MatrixFactory[3, 4, Int]
-      .fromTuple((0, 8, 15, 0), (4, 7, 1, 1), (1, 2, 3, 4))
+   val a: Matrix[3, 4, Int] = MatrixFactory[3, 4, Int].fromTuple(
+      (0, 8, 15, 0),
+      (4, 7, 1, 1),
+      (1, 2, 3, 4)
+   )
 
    // Create a Matrix of ones
    val b: Matrix[3, 4, Int] = MatrixFactory[3, 4, Int].ones
@@ -18,8 +21,9 @@ object ReadmeExamples extends App:
    val c: Matrix[3, 4, Int] = a + b
 
    // Create a Matrix of random numbers
-   val d: Matrix[4, 2, Int] = MatrixFactory[4, 2, Int]
-      .tabulate((_, _) => scala.util.Random.nextInt(20))
+   val d: Matrix[4, 2, Int] = MatrixFactory[4, 2, Int].tabulate((_, _) =>
+      scala.util.Random.nextInt(20)
+   )
 
    // Calculate the dot product of two Matrices
    val e: Matrix[3, 2, Int] = c dot d
