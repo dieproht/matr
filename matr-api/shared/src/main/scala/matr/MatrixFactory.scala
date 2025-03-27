@@ -12,6 +12,8 @@ import scala.compiletime.ops.any.==
   */
 trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], ValueOf[C]):
 
+   println("init MatrixFactory")
+
    protected val rowDim: R = valueOf[R]
    protected val colDim: C = valueOf[C]
    protected val num: Numeric[T] = summon[Numeric[T]]

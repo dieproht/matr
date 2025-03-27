@@ -8,13 +8,12 @@ object BasicTest:
    @main
    def run(): Unit =
       println("start")
-      val mf = MatrixFactory2[3, 4, Int]
-      val m = mf.fromTuple( //
+      val m = MatrixFactory[3, 4, Int].fromTuple( //
          (0, 8, 15, 0),
          (4, 7, 1, 1),
          (1, 2, 3, 4)
       )
       println(m.mkString)
-      val m2 = mf.ones
+      val m2 = MatrixFactory[3, 4, Int].ones
       println(m2.mkString)
       println("hihi")
