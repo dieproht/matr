@@ -50,16 +50,3 @@ case class DefaultMatrixBuilder[R <: Int, C <: Int, T]
 
 object DefaultMatrixBuilder:
    val MIN_DENSE_FILL: Float = 0.5
-
-   // given newDefaultMatrixBuilder[R <: Int, C <: Int, T]
-   //          (using Numeric[T])
-   //          (using Matrix.Requirements.NonNegativeDimensions[R, C])
-   //          (using ValueOf[R], ValueOf[C])
-   //          : Matrix.Builder[R, C, T] =
-   //             println("DefaultMatrixBuilder")
-   //             DefaultMatrixBuilder()
-   // TODO verify that method is invoked on every Matrix construction
-
-   given newDefaultMatrixBuilder[R <: Int, C <: Int, T]: MatrixContext[R, C, T] =
-      println("DefaultMatrixBuilder")
-      DefaultMatrixBuilder()

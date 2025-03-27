@@ -19,6 +19,8 @@ class MatrixFactory2[R <: Int, C <: Int, T]
           MatrixContext[R, C, T]
          ):
 
+   println("build MatrixFactory2")
+
    protected val rowDim: R = valueOf[R]
    protected val colDim: C = valueOf[C]
    protected val num: Numeric[T] = summon[Numeric[T]]

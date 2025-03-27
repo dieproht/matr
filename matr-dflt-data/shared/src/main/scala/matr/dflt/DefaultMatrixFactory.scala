@@ -5,9 +5,16 @@ import matr.Matrix
 import scala.collection.mutable
 import scala.reflect.ClassTag
 import matr.util.RowMajorIndex
+import matr.MatrixContext
 
 trait DefaultMatrixFactory:
 
+   // new
+   given newDefaultMatrixBuilder[R <: Int, C <: Int, T]: MatrixContext[R, C, T] =
+         println("build DefaultMatrixBuilder")
+         DefaultMatrixBuilder()
+
+   // old
    given defaultMatrixFactory[R <: Int, C <: Int, T]
             (using Numeric[T])
             (using Matrix.Requirements.NonNegativeDimensions[R, C])
