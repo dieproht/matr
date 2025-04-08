@@ -1,7 +1,7 @@
 package matr.dflt
 
 import matr.Matrix
-import matr.MatrixContext
+// import matr.MatrixContext
 import matr.util.RowMajorIndex
 
 import scala.collection.mutable

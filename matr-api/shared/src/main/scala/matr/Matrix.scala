@@ -205,9 +205,9 @@ object Matrix:
       )
 
 // TODO move
-type MatrixContext[R <: Int, C <: Int, T] =
-   (ValueOf[R],
-    ValueOf[C],
-    Numeric[T],
-    Matrix.Requirements.NonNegativeDimensions[R, C]
-   ) ?=> Matrix.Builder[R, C, T]
+// type MatrixContext[R <: Int, C <: Int, T] =
+//    (ValueOf[R],
+//     ValueOf[C],
+//     Numeric[T],
+//     Matrix.Requirements.NonNegativeDimensions[R, C]
+//    ) ?=> Matrix.Builder[R, C, T]

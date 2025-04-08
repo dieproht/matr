@@ -5,17 +5,23 @@ import matr.TupleSupport.RowTupleReader
 import matr.util.RowMajorIndex
 
 import scala.compiletime.ops.any.==
+import scala.collection.concurrent.TrieMap
+import scala.reflect.ClassTag
 
 /** Central entry point for creating Matrices.
   *
   * Modules implementing the `Matrix` trait should also provide an instance of this type class.
   */
-trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], ValueOf[C]):
+trait MatrixFactory[R <: Int, C <: Int, T]
+         (using Numeric[T], ClassTag[T])
+         (using ValueOf[R], ValueOf[C]):
 
    println("init MatrixFactory")
 
-   protected val rowDim: R = valueOf[R]
-   protected val colDim: C = valueOf[C]
+   val rowDim: R = valueOf[R]
+   val colDim: C = valueOf[C]
+   val clazz: ClassTag[T] = summon[ClassTag[T]]
+
    protected val num: Numeric[T] = summon[Numeric[T]]
 
    /** Returns a new `Builder` instance.
@@ -103,6 +109,13 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
 
 object MatrixFactory:
 
+   private val cachedFactories: TrieMap[String, MatrixFactory[?, ?, ?]] = TrieMap()
+
+   private def key(mf: MatrixFactory[?, ?, ?]) =
+      s"${mf.rowDim}-${mf.colDim}-${mf.clazz.runtimeClass.getName}"
+
    /** Returns the implicitly available `MatrixFactory`.
      */
-   def apply[R <: Int, C <: Int, T](using mf: MatrixFactory[R, C, T]): MatrixFactory[R, C, T] = mf
+   def apply[R <: Int, C <: Int, T](using mf: MatrixFactory[R, C, T]): MatrixFactory[R, C, T] =
+      println("Hi from apply! " + mf)
+      mf
