@@ -8,22 +8,39 @@ import scala.compiletime.ops.any.==
 import scala.collection.concurrent.TrieMap
 import scala.reflect.ClassTag
 
+type CreateMatrixBuilder[R <: Int, C <: Int, T] =
+   (ValueOf[R],
+    ValueOf[C],
+    Numeric[T],
+    Matrix.Requirements.NonNegativeDimensions[R, C]
+   ) ?=> Matrix.Builder[R, C, T]
+
 /** Central entry point for creating Matrices.
   *
   * Modules implementing the `Matrix` trait should also provide an instance of this type class.
   */
-trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], ValueOf[C]):
+class MatrixFactory3[R <: Int, C <: Int, T]
+         (using
+          Numeric[T],
+          ClassTag[T],
+          ValueOf[R],
+          ValueOf[C],
+          Matrix.Requirements.NonNegativeDimensions[R, C],
+          CreateMatrixBuilder[R, C, T]
+         ):
 
-   println("init MatrixFactory")
+   println("init MatrixFactory3")
 
    val rowDim: R = valueOf[R]
    val colDim: C = valueOf[C]
+
+   val clazz = summon[ClassTag[T]]
 
    protected val num: Numeric[T] = summon[Numeric[T]]
 
    /** Returns a new `Builder` instance.
      */
-   def builder: Matrix.Builder[R, C, T]
+   def builder: Matrix.Builder[R, C, T] = summon[Matrix.Builder[R, C, T]]
 
    /** Creates a Matrix containing the specified elements, assuming row-major order. Dimensions will
      * be checked at runtime.
@@ -104,10 +121,26 @@ trait MatrixFactory[R <: Int, C <: Int, T](using Numeric[T])(using ValueOf[R], V
       matrixReader.readMatrix(matrixTuple, rowDim, setRow)
       buildr.result
 
-object MatrixFactory:
+object MatrixFactory3:
 
-   /** Returns the implicitly available `MatrixFactory`.
-     */
-   def apply[R <: Int, C <: Int, T](using mf: MatrixFactory[R, C, T]): MatrixFactory[R, C, T] =
-      println("Hi from apply! " + mf)
-      mf
+   private val cachedFactories: TrieMap[String, MatrixFactory3[? <: Int, ? <: Int, ?]] = TrieMap()
+
+   private def key[R <: Int, C <: Int, T](using ClassTag[T], ValueOf[R], ValueOf[C]): String =
+      s"${valueOf[R]}-${valueOf[C]}-${summon[ClassTag[T]].runtimeClass.getName}"
+
+   def apply[R <: Int, C <: Int, T]
+            (using
+             Numeric[T],
+             ClassTag[T],
+             ValueOf[R],
+             ValueOf[C],
+             Matrix.Requirements.NonNegativeDimensions[R, C],
+             CreateMatrixBuilder[R, C, T]
+            )
+            : MatrixFactory3[R, C, T] = //
+      val r = cachedFactories
+         .getOrElseUpdate(key[R, C, T], new MatrixFactory3[R, C, T])
+         .asInstanceOf[MatrixFactory3[R, C, T]]
+      println("Hi from apply! " + r)
+      println("Hi from apply! " + cachedFactories.mkString("; "))
+      r

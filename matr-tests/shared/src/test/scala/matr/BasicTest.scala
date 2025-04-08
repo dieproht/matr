@@ -6,7 +6,7 @@ import matr.MatrixFactory
 // import matr.dflt.DefaultMatrixBuilder.newDefaultMatrixBuilder
 
 object BasicTest:
-   @main
+   // @main
    def run(): Unit =
       println("start")
       val m1 = MatrixFactory[3, 4, Int].fromTuple( //

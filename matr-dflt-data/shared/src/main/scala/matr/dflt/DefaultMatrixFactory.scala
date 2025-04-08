@@ -1,19 +1,19 @@
 package matr.dflt
 
 import matr.Matrix
-// import matr.MatrixContext
 import matr.MatrixFactory
 import matr.util.RowMajorIndex
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
+import matr.CreateMatrixBuilder
 
 trait DefaultMatrixFactory:
 
    // new
-//    given newDefaultMatrixBuilder[R <: Int, C <: Int, T]: MatrixContext[R, C, T] =
-//          println("build DefaultMatrixBuilder")
-//          DefaultMatrixBuilder()
+   given createDefaultMatrixBuilder[R <: Int, C <: Int, T]: CreateMatrixBuilder[R, C, T] =
+         println("createDefaultMatrixBuilder")
+         DefaultMatrixBuilder()
 
    // old
    given defaultMatrixFactory[R <: Int, C <: Int, T]
