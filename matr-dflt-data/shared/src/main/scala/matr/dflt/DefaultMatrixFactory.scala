@@ -6,12 +6,11 @@ import matr.util.RowMajorIndex
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
-import matr.CreateMatrixBuilder
 
 trait DefaultMatrixFactory:
 
    // new
-   given createDefaultMatrixBuilder[R <: Int, C <: Int, T]: CreateMatrixBuilder[R, C, T] =
+   given createDefaultMatrixBuilder[R <: Int, C <: Int, T]: Matrix.CreateMatrixBuilder[R, C, T] =
          println("createDefaultMatrixBuilder")
          DefaultMatrixBuilder()
 

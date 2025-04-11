@@ -166,7 +166,9 @@ object Matrix:
    /** A `Builder` is a "Matrix under construction" that itself forms a (mutable) Matrix. Utilizing
      * `Builder` is the preferred way of creating new Matrices in Matrix operations.
      *
-     * Invoking the same `Builder` instance multiple times is OK, but letting a `Builder` leave a
+     * Modules implementing the `Matrix` trait should also provide an implementation of this trait.
+     *
+     * Invoking the same `Builder` instance multiple times is OK, but letting a `Builder` leave the
      * local scope is not OK (it's mutable!).
      *
      * Implementations of this trait must return zero for uninitialized element positions.
@@ -180,6 +182,17 @@ object Matrix:
       /** Creates the Matrix resulting from this `Builder`.
         */
       def result: Matrix[R, C, T]
+
+      /** Factory function for creating `Matrix.Builder` instances.
+        *
+        * Modules implementing the `Matrix` trait should also provide a given instance of this type.
+        */
+   type CreateMatrixBuilder[R <: Int, C <: Int, T] =
+      (ValueOf[R],
+       ValueOf[C],
+       Numeric[T],
+       Matrix.Requirements.NonNegativeDimensions[R, C]
+      ) ?=> Matrix.Builder[R, C, T]
 
    object Requirements:
 
@@ -203,11 +216,3 @@ object Matrix:
          rowIdx >= 0 && rowIdx < rowDim && colIdx >= 0 && colIdx < colDim,
          s"Given zero-based position ($rowIdx, $colIdx) not within shape ($rowDim, $colDim) of Matrix!"
       )
-
-// TODO move
-// type MatrixContext[R <: Int, C <: Int, T] =
-//    (ValueOf[R],
-//     ValueOf[C],
-//     Numeric[T],
-//     Matrix.Requirements.NonNegativeDimensions[R, C]
-//    ) ?=> Matrix.Builder[R, C, T]

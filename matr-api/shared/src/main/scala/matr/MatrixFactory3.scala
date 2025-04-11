@@ -8,39 +8,22 @@ import scala.compiletime.ops.any.==
 import scala.collection.concurrent.TrieMap
 import scala.reflect.ClassTag
 
-type CreateMatrixBuilder[R <: Int, C <: Int, T] =
-   (ValueOf[R],
-    ValueOf[C],
-    Numeric[T],
-    Matrix.Requirements.NonNegativeDimensions[R, C]
-   ) ?=> Matrix.Builder[R, C, T]
-
 /** Central entry point for creating Matrices.
-  *
-  * Modules implementing the `Matrix` trait should also provide an instance of this type class.
   */
-class MatrixFactory3[R <: Int, C <: Int, T]
-         (using
-          Numeric[T],
-          ClassTag[T],
-          ValueOf[R],
-          ValueOf[C],
-          Matrix.Requirements.NonNegativeDimensions[R, C],
-          CreateMatrixBuilder[R, C, T]
-         ):
+class MatrixFactory3[R <: Int, C <: Int, T] private (using
+ ValueOf[R],
+ ValueOf[C],
+ Numeric[T],
+ ClassTag[T],
+ Matrix.Requirements.NonNegativeDimensions[R, C],
+ Matrix.CreateMatrixBuilder[R, C, T]
+):
+   private val rowDim: R = valueOf[R]
+   private val colDim: C = valueOf[C]
+   private val num: Numeric[T] = summon[Numeric[T]]
 
-   println("init MatrixFactory3")
-
-   val rowDim: R = valueOf[R]
-   val colDim: C = valueOf[C]
-
-   val clazz = summon[ClassTag[T]]
-
-   protected val num: Numeric[T] = summon[Numeric[T]]
-
-   /** Returns a new `Builder` instance.
-     */
-   def builder: Matrix.Builder[R, C, T] = summon[Matrix.Builder[R, C, T]]
+   private val createBuilder: Matrix.CreateMatrixBuilder[R, C, T] =
+      summon[Matrix.CreateMatrixBuilder[R, C, T]]
 
    /** Creates a Matrix containing the specified elements, assuming row-major order. Dimensions will
      * be checked at runtime.
@@ -50,7 +33,7 @@ class MatrixFactory3[R <: Int, C <: Int, T]
          elements.length == rowDim * colDim,
          s"Size of given element collection must be ${rowDim * colDim}, but was ${elements.size}"
       )
-      val buildr: Matrix.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = createBuilder
       var idx: Int = 0
       while (idx < elements.length) do
          val (rowIdx, colIdx) = RowMajorIndex.fromIdx(idx, colDim)
@@ -64,7 +47,7 @@ class MatrixFactory3[R <: Int, C <: Int, T]
      *   function returning the element at the specified position (row index, column index)
      */
    def tabulate(fillElem: (Int, Int) => T): Matrix[R, C, T] =
-      val buildr: Matrix.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = createBuilder
       buildr.iterate { (rowIdx, colIdx) =>
          buildr(rowIdx, colIdx) = fillElem(rowIdx, colIdx)
       }
@@ -113,7 +96,7 @@ class MatrixFactory3[R <: Int, C <: Int, T]
             )
             (using Tuple.Size[MatrixTuple] =:= R, Tuple.Size[RowTuple] =:= C)
             : Matrix[R, C, T] =
-      val buildr: Matrix.Builder[R, C, T] = builder
+      val buildr: Matrix.Builder[R, C, T] = createBuilder
       val setElem: (Int, Int, T) => Unit =
          (rowIdx, colIdx, elem) => buildr.update(rowIdx, colIdx, elem)
       val setRow: (Int, RowTuple) => Unit =
@@ -125,7 +108,7 @@ object MatrixFactory3:
 
    private val cachedFactories: TrieMap[String, MatrixFactory3[? <: Int, ? <: Int, ?]] = TrieMap()
 
-   private def key[R <: Int, C <: Int, T](using ClassTag[T], ValueOf[R], ValueOf[C]): String =
+   private def cacheKey[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], ClassTag[T]): String =
       s"${valueOf[R]}-${valueOf[C]}-${summon[ClassTag[T]].runtimeClass.getName}"
 
    def apply[R <: Int, C <: Int, T]
@@ -135,12 +118,9 @@ object MatrixFactory3:
              ValueOf[R],
              ValueOf[C],
              Matrix.Requirements.NonNegativeDimensions[R, C],
-             CreateMatrixBuilder[R, C, T]
+             Matrix.CreateMatrixBuilder[R, C, T]
             )
             : MatrixFactory3[R, C, T] = //
-      val r = cachedFactories
-         .getOrElseUpdate(key[R, C, T], new MatrixFactory3[R, C, T])
+      cachedFactories
+         .getOrElseUpdate(cacheKey[R, C, T], new MatrixFactory3[R, C, T])
          .asInstanceOf[MatrixFactory3[R, C, T]]
-      println("Hi from apply! " + r)
-      println("Hi from apply! " + cachedFactories.mkString("; "))
-      r
