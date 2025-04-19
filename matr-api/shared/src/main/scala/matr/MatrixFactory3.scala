@@ -4,8 +4,8 @@ import matr.TupleSupport.MatrixTupleReader
 import matr.TupleSupport.RowTupleReader
 import matr.util.RowMajorIndex
 
-import scala.compiletime.ops.any.==
 import scala.collection.concurrent.TrieMap
+import scala.compiletime.ops.any.==
 import scala.reflect.ClassTag
 
 /** Central entry point for creating Matrices.
@@ -111,6 +111,8 @@ object MatrixFactory3:
    private def cacheKey[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], ClassTag[T]): String =
       s"${valueOf[R]}-${valueOf[C]}-${summon[ClassTag[T]].runtimeClass.getName}"
 
+      /** Returns a MatrixFactory matching the given dimensions and data type.
+        */
    def apply[R <: Int, C <: Int, T]
             (using
              Numeric[T],
