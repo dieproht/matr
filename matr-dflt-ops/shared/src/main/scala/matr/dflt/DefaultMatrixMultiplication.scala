@@ -1,7 +1,6 @@
 package matr.dflt
 
 import matr.ElementMultiplication
-import matr.Matrix
 import matr.MatrixFactory
 import matr.MatrixMultiplication
 

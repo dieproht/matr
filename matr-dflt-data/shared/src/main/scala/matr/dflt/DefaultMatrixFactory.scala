@@ -2,24 +2,21 @@ package matr.dflt
 
 import matr.Matrix
 import matr.MatrixFactory
-import matr.util.RowMajorIndex
+import matr.util.MatrixFactoryCache
 
-import scala.collection.mutable
 import scala.reflect.ClassTag
 
 trait DefaultMatrixFactory:
 
-   // new
-   given createDefaultMatrixBuilder[R <: Int, C <: Int, T]: Matrix.CreateMatrixBuilder[R, C, T] =
-         println("createDefaultMatrixBuilder")
-         DefaultMatrixBuilder()
-
-   // old
    given defaultMatrixFactory[R <: Int, C <: Int, T]
             (using Numeric[T], ClassTag[T])
             (using Matrix.Requirements.NonNegativeDimensions[R, C])
             (using ValueOf[R], ValueOf[C])
-            : MatrixFactory[R, C, T] with
-      def builder: Matrix.Builder[R, C, T] = DefaultMatrixBuilder()
-    
+            : MatrixFactory[R, C, T] = 
+     MatrixFactoryCache[R,C,T](
+       new MatrixFactory[R,C,T]:
+         override def builder: Matrix.Builder[R, C, T] = DefaultMatrixBuilder()
+     )
+      
+     
 object DefaultMatrixFactory extends DefaultMatrixFactory

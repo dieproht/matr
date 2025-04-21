@@ -183,17 +183,6 @@ object Matrix:
         */
       def result: Matrix[R, C, T]
 
-      /** Factory function for creating `Matrix.Builder` instances.
-        *
-        * Modules implementing the `Matrix` trait should also provide a given instance of this type.
-        */
-   type CreateMatrixBuilder[R <: Int, C <: Int, T] =
-      (ValueOf[R],
-       ValueOf[C],
-       Numeric[T],
-       Matrix.Requirements.NonNegativeDimensions[R, C]
-      ) ?=> Matrix.Builder[R, C, T]
-
    object Requirements:
 
       /** Validates at compile-time that the specified Matrix dimensions are non-negative.
