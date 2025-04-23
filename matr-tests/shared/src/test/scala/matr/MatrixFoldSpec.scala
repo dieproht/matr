@@ -1,14 +1,9 @@
 package test.matr.impl
 
-import matr.Matrix
-import matr.dflt.DefaultMatrixFactory.given
-import matr.dflt.DefaultMatrixOps.given
-import matr.util.RowMajorIndex
-import matr.std.StandardOps.given
 import matr.MatrFlatSpec
+import matr.Matrix
 import matr.MatrixFactory
-import scala.util.Random
-import org.scalacheck.Arbitrary
+import matr.dflt.DefaultMatrixFactory.given
 import org.scalacheck.Gen
 import org.scalacheck.Gen.Choose
 

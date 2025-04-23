@@ -1,15 +1,13 @@
 package matr.dflt
 
-import matr.ArbitraryMatrix
 import matr.GenNumericMatrix
-import matr.Matrix
-import matr.MatrixMultiplication
-import matr.MatrixFactory
 import matr.MatrFlatSpec
+import matr.Matrix
+import matr.MatrixFactory
+import matr.MatrixMultiplication
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
 import matr.std.StandardOps.given
-import org.scalacheck.Arbitrary
 
 class DefaultMatrixMultiplictionSpec extends MatrFlatSpec:
 

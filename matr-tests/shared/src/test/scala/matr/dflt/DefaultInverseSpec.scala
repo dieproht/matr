@@ -3,22 +3,18 @@ package matr.dflt
 import matr.ElementDivision
 import matr.ElementMultiplication
 import matr.GenNumericMatrix
-import matr.Inverse
 import matr.MatrFlatSpec
 import matr.Matrix
 import matr.MatrixFactory
 import matr.MatrixNotInvertibleException
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.std.StandardOps.given
 import org.scalacheck.Gen
 import spire.compat.numeric
 import spire.math.Rational
 
 import scala.math
 import scala.util.Random
-
-import math.Numeric.Implicits.infixNumericOps
 
 class DefaultInverseSpec extends MatrFlatSpec:
 
@@ -41,8 +37,6 @@ class DefaultInverseSpec extends MatrFlatSpec:
             (using MatrixFactory[N, N, Rational])
             (using ValueOf[N])
             (using Matrix.Requirements.IsSquare[N, N]) =
-
-      val num = Numeric[Rational]
 
       val id = MatrixFactory[N, N, Rational].identity
 

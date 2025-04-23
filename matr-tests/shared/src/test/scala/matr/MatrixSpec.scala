@@ -1,16 +1,15 @@
 package matr
 
-import matr.ArbitraryMatrix
-import matr.GenMatrix
-import matr.GenNumericMatrix
-import matr.Matrix
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
 import matr.std.StandardOps.given
-import scala.util.Random
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 
+import scala.annotation.nowarn
+import scala.util.Random
+
+@nowarn
 class MatrixSpec extends MatrFlatSpec:
 
    "Constructing a Matrix with invalid shape" should "not compile" in {

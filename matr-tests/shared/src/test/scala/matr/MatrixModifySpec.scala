@@ -1,9 +1,7 @@
 package matr
 
-import matr.Matrix
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.std.StandardOps.given
 import org.scalacheck.Arbitrary
 
 class MatrixModifySpec extends MatrFlatSpec:

@@ -1,20 +1,17 @@
 package test.matr.dflt
 
-import matr.ArbitraryMatrix
-import matr.GenMatrix
-import matr.GenNumericMatrix
+import matr.MatrFlatSpec
 import matr.Matrix
 import matr.MatrixFactory
-import matr.MatrFlatSpec
+import matr.dflt.DefaultDenseMatrix
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.dflt.DefaultDenseMatrix
 import matr.dflt.DefaultSparseMatrix
-import matr.std.StandardOps.given
 import matr.util.RowMajorIndex
-import scala.util.Random
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
+
+import scala.util.Random
 
 class DefaultMatrixFactorySpec extends MatrFlatSpec:
 

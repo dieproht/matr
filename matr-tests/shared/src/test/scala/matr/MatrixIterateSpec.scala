@@ -1,10 +1,7 @@
 package matr
 
-import matr.Matrix
 import matr.dflt.DefaultMatrixFactory.given
-import matr.dflt.DefaultMatrixOps.given
 import matr.util.RowMajorIndex
-import matr.std.StandardOps.given
 
 class MatrixIterateSpec extends MatrFlatSpec:
 
