@@ -2,7 +2,6 @@ package matr.dflt
 
 import matr.Matrix
 import matr.util.RowMajorIndex
-import scala.reflect.ClassTag
 
 case class DefaultDenseMatrix[R <: Int, C <: Int, T]
          (private val elements: Array[T])
