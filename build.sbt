@@ -1,3 +1,5 @@
+import xerial.sbt.Sonatype.sonatypeCentralHost
+
 val _scalaVersions: Seq[String] = Seq("3.3.5")
 
 ThisBuild / organization := "io.github.dieproht"
@@ -17,12 +19,9 @@ ThisBuild / developers :=
 ThisBuild / semanticdbEnabled := true
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 
-sonatypeCredentialHost := "s01.oss.sonatype.org"
-sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
 
 def commonSettings = Seq(
-   sonatypeCredentialHost := "s01.oss.sonatype.org",
-   sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
    scalacOptions ++=
       Seq(
          "-deprecation",
