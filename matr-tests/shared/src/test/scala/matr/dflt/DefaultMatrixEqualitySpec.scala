@@ -10,7 +10,7 @@ import org.scalacheck.Arbitrary
 
 class DefaultMatrixEqualitySpec extends MatrFlatSpec:
 
-   "A matrix" should "equal itself" in {
+   "A matrix" should "equal itself" in:
 
       val matrixEquality = summon[MatrixEquality[2, 3, Int]]
 
@@ -18,9 +18,8 @@ class DefaultMatrixEqualitySpec extends MatrFlatSpec:
       forAll { (m: Matrix[2, 3, Int]) =>
          matrixEquality.matricesEqual(m, m) shouldBe true
       }
-   }
 
-   "Two matrices" should "not equal when they are completely different" in {
+   "Two matrices" should "not equal when they are completely different" in:
 
       val matrixEquality = summon[MatrixEquality[2, 3, Int]]
 
@@ -29,9 +28,8 @@ class DefaultMatrixEqualitySpec extends MatrFlatSpec:
       forAll { (m1: Matrix[2, 3, Int], m2: Matrix[2, 3, Int]) =>
          matrixEquality.matricesEqual(m1, m2) shouldBe false
       }
-   }
 
-   it should "not equal when they differ in one element" in {
+   it should "not equal when they differ in one element" in:
 
       val matrixEquality = summon[MatrixEquality[2, 3, Int]]
 
@@ -43,4 +41,3 @@ class DefaultMatrixEqualitySpec extends MatrFlatSpec:
          val m2 = m2Buildr.result
          matrixEquality.matricesEqual(m1, m2) shouldBe false
       }
-   }

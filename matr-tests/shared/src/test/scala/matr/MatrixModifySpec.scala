@@ -6,7 +6,7 @@ import org.scalacheck.Arbitrary
 
 class MatrixModifySpec extends MatrFlatSpec:
 
-   "Not modifying the given Matrix" should "return the same Matrix" in {
+   "Not modifying the given Matrix" should "return the same Matrix" in:
 
       given Arbitrary[Matrix[4, 4, Double]] = ArbitraryMatrix[4, 4, Double]
 
@@ -14,9 +14,8 @@ class MatrixModifySpec extends MatrFlatSpec:
          val mRes: Matrix[4, 4, Double] = m.modify.result
          mRes === m shouldBe true
       }
-   }
 
-   "Modifying one element" should "return the given Matrix modified at the expected place" in {
+   "Modifying one element" should "return the given Matrix modified at the expected place" in:
 
       given Arbitrary[Matrix[2, 2, Double]] = ArbitraryMatrix[2, 2, Double]
 
@@ -37,4 +36,3 @@ class MatrixModifySpec extends MatrFlatSpec:
          mRes === m shouldBe false
          mRes === mExp shouldBe true
       }
-   }

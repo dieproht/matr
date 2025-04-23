@@ -12,6 +12,5 @@ trait ElementDivision[A, B]:
 object ElementDivision:
 
    type Aux[A0, B0, Out0] =
-      ElementDivision[A0, B0] {
+      ElementDivision[A0, B0]:
          type Out = Out0
-      }

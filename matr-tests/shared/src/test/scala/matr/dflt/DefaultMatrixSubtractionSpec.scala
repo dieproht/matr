@@ -11,7 +11,7 @@ import org.scalacheck.Arbitrary
 
 class DefaultMatrixSubtractionSpec extends MatrFlatSpec:
 
-   "Matrix subtraction" should "subtract two matrices" in {
+   "Matrix subtraction" should "subtract two matrices" in:
 
       val matrixIntSub = summon[MatrixSubtraction[3, 2, Int]]
 
@@ -31,4 +31,3 @@ class DefaultMatrixSubtractionSpec extends MatrFlatSpec:
 
          resSub === resExp shouldBe true
       }
-   }

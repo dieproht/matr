@@ -11,7 +11,7 @@ import org.scalacheck.Arbitrary
 
 class MatrixFactorySpec extends MatrFlatSpec:
 
-   "Tuple-built Matrix" should "equal row-major built Matrix" in {
+   "Tuple-built Matrix" should "equal row-major built Matrix" in:
       val m1: Matrix[4, 3, Int] = MatrixFactory[4, 3, Int].rowMajor(
          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
       )
@@ -22,9 +22,8 @@ class MatrixFactorySpec extends MatrFlatSpec:
          (10, 11, 12)
       )
       m1 === m2 shouldEqual true
-   }
 
-   it should "equal given Matrix 3x2" in {
+   it should "equal given Matrix 3x2" in:
 
       given Arbitrary[Matrix[3, 2, Int]] = ArbitraryMatrix[3, 2, Int]
 
@@ -38,9 +37,8 @@ class MatrixFactorySpec extends MatrFlatSpec:
 
          md === mg shouldBe true
       }
-   }
 
-   it should "equal given Matrix 3x4" in {
+   it should "equal given Matrix 3x4" in:
 
       given Arbitrary[Matrix[3, 4, Int]] = ArbitraryMatrix[3, 4, Int]
 
@@ -53,40 +51,35 @@ class MatrixFactorySpec extends MatrFlatSpec:
 
          md === mg shouldBe true
       }
-   }
 
-   it should "not compile with wrong row dimension" in {
+   it should "not compile with wrong row dimension" in:
       assertDoesNotCompile("""
          MatrixFactory[4, 3, Int].fromTuple(
             (1, 2, 3),
             (4, 5, 6),
             (7, 8, 9)
          )""")
-   }
 
-   it should "not compile with wrong column dimension" in {
+   it should "not compile with wrong column dimension" in:
       assertDoesNotCompile("""
          MatrixFactory[3, 3, Int].fromTuple(
             (1, 2),
             (3, 4),
             (5, 6)
          )""")
-   }
 
-   it should "not compile with wrong column dimension in one row" in {
+   it should "not compile with wrong column dimension in one row" in:
       assertDoesNotCompile("""
          MatrixFactory[3, 2, Int].fromTuple(
             (1, 2),
             (3, 4, 5),
             (6, 7)
          )""")
-   }
 
-   it should "not compile with wrong element type" in {
+   it should "not compile with wrong element type" in:
       assertDoesNotCompile("""
          MatrixFactory[3, 2, Int].fromTuple(
             (1, 2),
             (3, 4.0),
             (5, 6)
          )""")
-   }

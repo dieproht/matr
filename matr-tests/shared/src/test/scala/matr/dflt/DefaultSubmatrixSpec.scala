@@ -12,7 +12,7 @@ import org.scalacheck.Arbitrary
 class DefaultSubmatrixSpec extends MatrFlatSpec:
 
    "DefaultSubmatrix" should
-      "return correct Submatrix when (2,1) is top-left and (3, 3) bottom-right of Matrix 8x8" in {
+      "return correct Submatrix when (2,1) is top-left and (3, 3) bottom-right of Matrix 8x8" in:
 
          val submatrix: Submatrix[2, 1, 3, 3, 8, 8, Double] =
             summon[Submatrix[2, 1, 3, 3, 8, 8, Double]]
@@ -33,10 +33,9 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
 
             resSubmatrix === resExp shouldBe true
          }
-      }
 
    it should
-      "return original Matrix when (0,0) is top-left and (7, 7) bottom-right of Matrix 8x8" in {
+      "return original Matrix when (0,0) is top-left and (7, 7) bottom-right of Matrix 8x8" in:
 
          val submatrix: Submatrix[0, 0, 7, 7, 8, 8, Double] =
             summon[Submatrix[0, 0, 7, 7, 8, 8, Double]]
@@ -48,10 +47,9 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
 
             resSubmatrix === m shouldBe true
          }
-      }
 
    it should
-      "return correct Submatrix when (0,2) is top-left and (0, 4) bottom-right of Matrix 8x8" in {
+      "return correct Submatrix when (0,2) is top-left and (0, 4) bottom-right of Matrix 8x8" in:
 
          val submatrix: Submatrix[0, 2, 0, 4, 8, 8, Double] =
             summon[Submatrix[0, 2, 0, 4, 8, 8, Double]]
@@ -69,9 +67,8 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
 
             resSubmatrix === resExp shouldBe true
          }
-      }
 
-   it should "return first column when (0,0) is top-left and (7, 0) bottom-right of Matrix 8x8" in {
+   it should "return first column when (0,0) is top-left and (7, 0) bottom-right of Matrix 8x8" in:
 
       val submatrix: Submatrix[0, 0, 7, 0, 8, 8, Double] =
          summon[Submatrix[0, 0, 7, 0, 8, 8, Double]]
@@ -94,9 +91,8 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
 
          resSubmatrix === resExp shouldBe true
       }
-   }
 
-   it should "return second column when (0,1) is top-left and (7, 1) bottom-right of Matrix 8x8" in {
+   it should "return second column when (0,1) is top-left and (7, 1) bottom-right of Matrix 8x8" in:
 
       val submatrix: Submatrix[0, 1, 7, 1, 8, 8, Double] =
          summon[Submatrix[0, 1, 7, 1, 8, 8, Double]]
@@ -119,4 +115,3 @@ class DefaultSubmatrixSpec extends MatrFlatSpec:
 
          resSubmatrix === resExp shouldBe true
       }
-   }

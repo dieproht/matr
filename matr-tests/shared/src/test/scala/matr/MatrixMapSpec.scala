@@ -10,7 +10,7 @@ import scala.util.Random
 @nowarn
 class MatrixMapSpec extends MatrFlatSpec:
 
-   "Mapping a Matrix" should "require a function that takes the data type of the elements" in {
+   "Mapping a Matrix" should "require a function that takes the data type of the elements" in:
 
       val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
          Random.nextDouble
@@ -19,9 +19,8 @@ class MatrixMapSpec extends MatrFlatSpec:
       val fn: Int => Double = _.toDouble
 
       assertTypeError("val res = m.map(fn)")
-   }
 
-   it should "return the same Matrix when applying the identity function" in {
+   it should "return the same Matrix when applying the identity function" in:
 
       given Arbitrary[Matrix[6, 4, Double]] = ArbitraryMatrix[6, 4, Double]
 
@@ -29,9 +28,8 @@ class MatrixMapSpec extends MatrFlatSpec:
          val mRes = m.map(identity)
          mRes === m shouldBe true
       }
-   }
 
-   it should "return Matrix of zeros when mapping by a function always returning zeros" in {
+   it should "return Matrix of zeros when mapping by a function always returning zeros" in:
 
       given Arbitrary[Matrix[3, 2, Int]] = ArbitraryMatrix[3, 2, Int]
 
@@ -41,9 +39,8 @@ class MatrixMapSpec extends MatrFlatSpec:
          val z: Matrix[3, 2, Int] = MatrixFactory[3, 2, Int].zeros
          mRes === z shouldBe true
       }
-   }
 
-   it should "apply given function element-wise on the Matrix" in {
+   it should "apply given function element-wise on the Matrix" in:
 
       given Arbitrary[Matrix[3, 2, Int]] = ArbitraryMatrix[3, 2, Int]
 
@@ -63,4 +60,3 @@ class MatrixMapSpec extends MatrFlatSpec:
 
          mRes === mExp shouldBe true
       }
-   }
