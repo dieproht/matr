@@ -1,4 +1,4 @@
-package test.matr.impl
+package test.matr.util
 
 import matr.MatrFlatSpec
 import matr.util.RowMajorIndex
