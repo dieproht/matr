@@ -10,7 +10,7 @@ import org.scalacheck.Arbitrary
 
 class DefaultDeterminantSpec extends MatrFlatSpec:
 
-   "DefaultDeterminant" should "return correct determinant for 1x1 Matrix" in {
+   "DefaultDeterminant" should "return correct determinant for 1x1 Matrix" in:
 
       val determinant: Determinant[1, 1, Int] = summon[Determinant[1, 1, Int]]
 
@@ -21,9 +21,8 @@ class DefaultDeterminantSpec extends MatrFlatSpec:
          val res = determinant.det(m)
          res shouldEqual resExp
       }
-   }
 
-   it should "return correct determinant for 3x3 Matrix" in {
+   it should "return correct determinant for 3x3 Matrix" in:
 
       val determinant: Determinant[3, 3, Int] = summon[Determinant[3, 3, Int]]
 
@@ -45,4 +44,3 @@ class DefaultDeterminantSpec extends MatrFlatSpec:
 
          res shouldEqual resExp
       }
-   }

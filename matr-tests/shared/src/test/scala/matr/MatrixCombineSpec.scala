@@ -10,7 +10,7 @@ import scala.util.Random
 @nowarn
 class MatrixCombineSpec extends MatrFlatSpec:
 
-   "Combining two Matrices" should "require matrices with same shape" in {
+   "Combining two Matrices" should "require matrices with same shape" in:
       val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
          Random.nextDouble
       )
@@ -19,10 +19,9 @@ class MatrixCombineSpec extends MatrFlatSpec:
       )
       val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
       assertTypeError("val res = m1.combine(m2)(fn)")
-   }
 
    it should
-      "require a function that takes the data type of the elements (left-hand side as first argument)" in {
+      "require a function that takes the data type of the elements (left-hand side as first argument)" in:
          val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
             Random.nextDouble
          )
@@ -31,10 +30,9 @@ class MatrixCombineSpec extends MatrFlatSpec:
          )
          val fn: (Float, Float) => Int = (a, b) => (a + b).toInt
          assertTypeError("val res = m1.combine(m2)(fn)")
-      }
 
    it should
-      "require a function that takes the data type of the elements (right-hand side as second argument)" in {
+      "require a function that takes the data type of the elements (right-hand side as second argument)" in:
          val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
             Random.nextDouble
          )
@@ -43,9 +41,8 @@ class MatrixCombineSpec extends MatrFlatSpec:
          )
          val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
          assertTypeError("val res = m1.combine(m2)(fn)")
-      }
 
-   it should "require a function that returns the data type of Matrix the result is assigned to" in {
+   it should "require a function that returns the data type of Matrix the result is assigned to" in:
       val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
          Random.nextDouble
       )
@@ -53,10 +50,9 @@ class MatrixCombineSpec extends MatrFlatSpec:
       val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
 
       assertTypeError("val res: Matrix[2, 3, Float] = m1.combine(m2)(fn)")
-   }
 
    it should
-      "return the left-hand side Matrix when applying the identity function on the left-hand side" in {
+      "return the left-hand side Matrix when applying the identity function on the left-hand side" in:
 
          given Arbitrary[Matrix[6, 4, Double]] = ArbitraryMatrix[6, 4, Double]
 
@@ -65,10 +61,9 @@ class MatrixCombineSpec extends MatrFlatSpec:
             val mRes = mLhs.combine(mRhs)(fn)
             mRes === mLhs shouldBe true
          }
-      }
 
    it should
-      "return the right-hand side Matrix when applying the identity function on the right-hand side" in {
+      "return the right-hand side Matrix when applying the identity function on the right-hand side" in:
 
          given Arbitrary[Matrix[6, 4, Double]] = ArbitraryMatrix[6, 4, Double]
 
@@ -77,9 +72,8 @@ class MatrixCombineSpec extends MatrFlatSpec:
             val mRes = mLhs.combine(mRhs)(fn)
             mRes === mRhs shouldBe true
          }
-      }
 
-   it should "apply given function element-wise on the given Matrices" in {
+   it should "apply given function element-wise on the given Matrices" in:
 
       given Arbitrary[Matrix[3, 2, Int]] = ArbitraryMatrix[3, 2, Int]
 
@@ -99,4 +93,3 @@ class MatrixCombineSpec extends MatrFlatSpec:
 
          mRes === mExp shouldBe true
       }
-   }

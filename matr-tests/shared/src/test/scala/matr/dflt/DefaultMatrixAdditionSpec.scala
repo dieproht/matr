@@ -11,7 +11,7 @@ import org.scalacheck.Arbitrary
 
 class DefaultMatrixAdditionSpec extends MatrFlatSpec:
 
-   "Matrix addition" should "add two matrices" in {
+   "Matrix addition" should "add two matrices" in:
 
       val matrixIntAdd = summon[MatrixAddition[3, 2, Int]]
 
@@ -31,4 +31,3 @@ class DefaultMatrixAdditionSpec extends MatrFlatSpec:
 
          resAdd === resExp shouldBe true
       }
-   }

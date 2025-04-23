@@ -12,6 +12,5 @@ trait ElementMultiplication[A, B]:
 object ElementMultiplication:
 
    type Aux[A0, B0, Out0] =
-      ElementMultiplication[A0, B0] {
+      ElementMultiplication[A0, B0]:
          type Out = Out0
-      }

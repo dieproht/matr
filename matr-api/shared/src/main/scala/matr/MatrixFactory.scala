@@ -55,13 +55,12 @@ trait MatrixFactory[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], Numeric
 
    /** Creates the identity Matrix.
      */
-   def identity(using Matrix.Requirements.IsSquare[R, C]): Matrix[R, C, T] = tabulate {
+   def identity(using Matrix.Requirements.IsSquare[R, C]): Matrix[R, C, T] = tabulate:
       (rowIdx, colIdx) =>
          if rowIdx == colIdx then
             num.one
          else
             num.zero
-   }
 
    /** Creates a Matrix with the specified elements that are structured row by row from tuples.
      *

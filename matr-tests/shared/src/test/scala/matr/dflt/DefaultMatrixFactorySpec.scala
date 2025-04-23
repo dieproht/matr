@@ -15,7 +15,7 @@ import scala.util.Random
 
 class DefaultMatrixFactorySpec extends MatrFlatSpec:
 
-   "Builder-built Matrix" should "equal given Matrix 1x1" in {
+   "Builder-built Matrix" should "equal given Matrix 1x1" in:
 
       val gen = Gen.containerOfN[Array, Long](1, Arbitrary.arbitrary[Long])
 
@@ -26,9 +26,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          val mExp: Matrix[1, 1, Long] = DefaultDenseMatrix(elements)
          mRes === mExp shouldBe true
       }
-   }
 
-   it should "equal given Matrix 1x2" in {
+   it should "equal given Matrix 1x2" in:
 
       val gen = Gen.containerOfN[Array, Long](2, Arbitrary.arbitrary[Long])
 
@@ -40,9 +39,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          val mExp: Matrix[1, 2, Long] = DefaultDenseMatrix(elements)
          mRes === mExp shouldBe true
       }
-   }
 
-   it should "equal given Matrix 2x1" in {
+   it should "equal given Matrix 2x1" in:
 
       val gen = Gen.containerOfN[Array, Long](2, Arbitrary.arbitrary[Long])
 
@@ -54,9 +52,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          val mExp: Matrix[2, 1, Long] = DefaultDenseMatrix(elements)
          mRes === mExp shouldBe true
       }
-   }
 
-   it should "equal given Matrix 2x2" in {
+   it should "equal given Matrix 2x2" in:
 
       val gen = Gen.containerOfN[Array, Long](4, Arbitrary.arbitrary[Long])
 
@@ -74,9 +71,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
 
          mRes === mExp shouldBe true
       }
-   }
 
-   it should "equal given Matrix 4x7" in {
+   it should "equal given Matrix 4x7" in:
 
       val gen = Gen.containerOfN[Array, Long](28, Arbitrary.arbitrary[Long])
 
@@ -94,23 +90,20 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
 
          mRes === mExp shouldBe true
       }
-   }
 
-   it should "be a SparseMatrix when containing only zeros" in {
+   it should "be a SparseMatrix when containing only zeros" in:
 
       val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].zeros
 
       m shouldBe a[DefaultSparseMatrix[3, 3, Long]]
-   }
 
-   it should "be a DenseMatrix when containing no zeros" in {
+   it should "be a DenseMatrix when containing no zeros" in:
 
       val m: Matrix[3, 3, Long] = MatrixFactory[3, 3, Long].ones
 
       m shouldBe a[DefaultDenseMatrix[3, 3, Long]]
-   }
 
-   it should "be a SparseMatrix when containing more zeros than treshold" in {
+   it should "be a SparseMatrix when containing more zeros than treshold" in:
 
       val num: Numeric[Long] = summon[Numeric[Long]]
 
@@ -130,9 +123,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       )
 
       m shouldBe a[DefaultSparseMatrix[3, 3, Long]]
-   }
 
-   it should "be a DenseMatrix when containing less zeros than treshold" in {
+   it should "be a DenseMatrix when containing less zeros than treshold" in:
 
       val num: Numeric[Long] = summon[Numeric[Long]]
 
@@ -152,9 +144,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       )
 
       m shouldBe a[DefaultDenseMatrix[3, 3, Long]]
-   }
 
-   "A Builder" should "return zero for all indices when not yet updated" in {
+   "A Builder" should "return zero for all indices when not yet updated" in:
 
       val num: Numeric[Int] = summon[Numeric[Int]]
       val buildr = MatrixFactory[4, 7, Int].builder
@@ -164,9 +155,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          colIdx <- 0 to 6
       do
          buildr(rowIdx, colIdx) shouldEqual num.zero
-   }
 
-   it should "return assigned values" in {
+   it should "return assigned values" in:
 
       val gen = Gen.containerOfN[Array, Long](28, Arbitrary.arbitrary[Long])
 
@@ -187,22 +177,17 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          do
             buildr(rowIdx, colIdx) shouldEqual mExp(rowIdx, colIdx)
       }
-   }
 
    "DefaultMatrixFactory.rowMajor" should
-      "raise an error at runtime when given element collection is too big" in {
-         assertThrows[IllegalArgumentException] {
+      "raise an error at runtime when given element collection is too big" in:
+         assertThrows[IllegalArgumentException]:
             MatrixFactory[2, 2, Int].rowMajor(1, 2, 3, 4, 5)
-         }
-      }
 
-   it should "raise an error at runtime when given element collection is too small" in {
-      assertThrows[IllegalArgumentException] {
+   it should "raise an error at runtime when given element collection is too small" in:
+      assertThrows[IllegalArgumentException]:
          MatrixFactory[2, 2, Int].rowMajor(1, 2, 3)
-      }
-   }
 
-   it should "create a SparseMatrix with the given elements" in {
+   it should "create a SparseMatrix with the given elements" in:
 
       val num: Numeric[Long] = summon[Numeric[Long]]
 
@@ -218,9 +203,8 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          colIdx <- 0 to 2
       do
          m(rowIdx, colIdx) shouldEqual elements(RowMajorIndex.toIdx(rowIdx, colIdx, 3))
-   }
 
-   it should "create a DenseMatrix with the given elements" in {
+   it should "create a DenseMatrix with the given elements" in:
 
       val num: Numeric[Long] = summon[Numeric[Long]]
 
@@ -236,4 +220,3 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
          colIdx <- 0 to 2
       do
          m(rowIdx, colIdx) shouldEqual elements(RowMajorIndex.toIdx(rowIdx, colIdx, 3))
-   }

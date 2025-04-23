@@ -11,7 +11,7 @@ import org.scalacheck.Arbitrary
 
 class DefaultTransposeSpec extends MatrFlatSpec:
 
-   "Transpose" should "return transposed Matrix" in {
+   "Transpose" should "return transposed Matrix" in:
 
       val transpose: Transpose[2, 3, Int] = summon[Transpose[2, 3, Int]]
 
@@ -31,9 +31,8 @@ class DefaultTransposeSpec extends MatrFlatSpec:
 
          resTranspose === resExp shouldBe true
       }
-   }
 
-   it should "return original Matrix when transposing transposed Matrix" in {
+   it should "return original Matrix when transposing transposed Matrix" in:
 
       val transpose1: Transpose[2, 3, Int] = summon[Transpose[2, 3, Int]]
       val transpose2: Transpose[3, 2, Int] = summon[Transpose[3, 2, Int]]
@@ -45,4 +44,3 @@ class DefaultTransposeSpec extends MatrFlatSpec:
 
          resTransposeTranspose === m shouldBe true
       }
-   }

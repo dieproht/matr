@@ -11,7 +11,7 @@ import matr.std.StandardOps.given
 
 class DefaultMatrixMultiplictionSpec extends MatrFlatSpec:
 
-   "Matrix multiplication" should "return dot product of two matrices" in {
+   "Matrix multiplication" should "return dot product of two matrices" in:
 
       val matrixIntMul = summon[MatrixMultiplication[3, 2, 4, Int, Int, Int]]
 
@@ -43,4 +43,3 @@ class DefaultMatrixMultiplictionSpec extends MatrFlatSpec:
 
          resultMul === resultExp shouldBe true
       }
-   }
