@@ -1,9 +1,8 @@
 package matr.dflt
 
 import matr.Matrix
-import matr.MatrixFactory
 import matr.Submatrix
-import scala.compiletime.ops.boolean.*
+
 import scala.compiletime.ops.int.*
 
 trait DefaultSubmatrix:

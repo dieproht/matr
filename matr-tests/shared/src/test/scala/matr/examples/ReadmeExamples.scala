@@ -1,4 +1,4 @@
-package matr
+package matr.examples
 
 object ReadmeExamples extends App:
 

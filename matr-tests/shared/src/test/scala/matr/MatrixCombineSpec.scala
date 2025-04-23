@@ -1,12 +1,13 @@
 package matr
 
-import matr.Matrix
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.std.StandardOps.given
-import scala.util.Random
 import org.scalacheck.Arbitrary
 
+import scala.annotation.nowarn
+import scala.util.Random
+
+@nowarn
 class MatrixCombineSpec extends MatrFlatSpec:
 
    "Combining two Matrices" should "require matrices with same shape" in {

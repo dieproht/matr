@@ -1,13 +1,11 @@
 package matr.dflt
 
 import matr.ArbitraryMatrix
+import matr.MatrFlatSpec
 import matr.Matrix
 import matr.MatrixEquality
-import matr.MatrFlatSpec
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.std.StandardOps.given
-import org.scalacheck.Gen
 import org.scalacheck.Arbitrary
 
 class DefaultMatrixEqualitySpec extends MatrFlatSpec:

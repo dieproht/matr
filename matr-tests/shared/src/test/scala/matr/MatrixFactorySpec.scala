@@ -1,14 +1,13 @@
 package test.matr
 
 import matr.ArbitraryMatrix
+import matr.MatrFlatSpec
+import matr.Matrix
+import matr.MatrixFactory
+import matr.TupleSupport.given
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.Matrix
-import matr.std.StandardOps.given
 import org.scalacheck.Arbitrary
-import matr.MatrixFactory
-import matr.MatrFlatSpec
-import matr.TupleSupport.given
 
 class MatrixFactorySpec extends MatrFlatSpec:
 

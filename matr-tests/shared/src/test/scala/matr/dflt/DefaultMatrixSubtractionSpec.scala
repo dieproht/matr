@@ -1,13 +1,12 @@
 package matr.dflt
 
 import matr.ArbitraryMatrix
-import matr.Matrix
-import matr.MatrixSubtraction
-import matr.MatrixFactory
 import matr.MatrFlatSpec
+import matr.Matrix
+import matr.MatrixFactory
+import matr.MatrixSubtraction
 import matr.dflt.DefaultMatrixFactory.given
 import matr.dflt.DefaultMatrixOps.given
-import matr.std.StandardOps.given
 import org.scalacheck.Arbitrary
 
 class DefaultMatrixSubtractionSpec extends MatrFlatSpec:
