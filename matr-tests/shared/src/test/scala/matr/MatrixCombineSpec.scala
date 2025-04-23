@@ -10,44 +10,49 @@ import org.scalacheck.Arbitrary
 class MatrixCombineSpec extends MatrFlatSpec:
 
    "Combining two Matrices" should "require matrices with same shape" in {
-      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-         .tabulate((_, _) => Random.nextDouble)
-      val m2: Matrix[4, 4, Double] = MatrixFactory[4, 4, Double]
-         .tabulate((_, _) => Random.nextDouble)
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
+         Random.nextDouble
+      )
+      val m2: Matrix[4, 4, Double] = MatrixFactory[4, 4, Double].tabulate((_, _) =>
+         Random.nextDouble
+      )
       val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
       assertTypeError("val res = m1.combine(m2)(fn)")
    }
 
    it should
       "require a function that takes the data type of the elements (left-hand side as first argument)" in {
-         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-            .tabulate((_, _) => Random.nextDouble)
-         val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float]
-            .tabulate((_, _) => Random.nextFloat)
+         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
+            Random.nextDouble
+         )
+         val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float].tabulate((_, _) =>
+            Random.nextFloat
+         )
          val fn: (Float, Float) => Int = (a, b) => (a + b).toInt
          assertTypeError("val res = m1.combine(m2)(fn)")
       }
 
    it should
       "require a function that takes the data type of the elements (right-hand side as second argument)" in {
-         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-            .tabulate((_, _) => Random.nextDouble)
-         val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float]
-            .tabulate((_, _) => Random.nextFloat)
+         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
+            Random.nextDouble
+         )
+         val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float].tabulate((_, _) =>
+            Random.nextFloat
+         )
          val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
          assertTypeError("val res = m1.combine(m2)(fn)")
       }
 
-   it should
-      "require a function that returns the data type of Matrix the result is assigned to" in {
-         val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-            .tabulate((_, _) => Random.nextDouble)
-         val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float]
-            .tabulate((_, _) => Random.nextFloat)
-         val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
+   it should "require a function that returns the data type of Matrix the result is assigned to" in {
+      val m1: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].tabulate((_, _) =>
+         Random.nextDouble
+      )
+      val m2: Matrix[2, 3, Float] = MatrixFactory[2, 3, Float].tabulate((_, _) => Random.nextFloat)
+      val fn: (Double, Double) => Int = (a, b) => (a + b).toInt
 
-         assertTypeError("val res: Matrix[2, 3, Float] = m1.combine(m2)(fn)")
-      }
+      assertTypeError("val res: Matrix[2, 3, Float] = m1.combine(m2)(fn)")
+   }
 
    it should
       "return the left-hand side Matrix when applying the identity function on the left-hand side" in {

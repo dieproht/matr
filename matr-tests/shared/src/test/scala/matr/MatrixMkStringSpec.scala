@@ -104,8 +104,9 @@ class MatrixMkStringSpec extends MatrFlatSpec:
 
    "Matrix.mkString with custom element renderer" should "correctly render 2x3 Double Matrix" in {
 
-      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double]
-         .rowMajor(3.14, 489.9, 0.0, 2234.423, 1.0, 27.543)
+      val m: Matrix[2, 3, Double] = MatrixFactory[2, 3, Double].rowMajor(
+         3.14, 489.9, 0.0, 2234.423, 1.0, 27.543
+      )
 
       def renderDouble(e: Double) = String.format("%.4f", e)
 
