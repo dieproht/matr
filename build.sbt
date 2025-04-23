@@ -32,7 +32,8 @@ def commonSettings = Seq(
          "-explain-types",
          "-feature",
          "-new-syntax",
-         "-unchecked"
+         "-unchecked",
+         "-Wunused:all"
       )
 )
 

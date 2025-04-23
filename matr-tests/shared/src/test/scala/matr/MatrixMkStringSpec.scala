@@ -1,10 +1,11 @@
 package matr
 
-import matr.Matrix
 import matr.dflt.DefaultMatrixFactory.given
-import matr.std.StandardOps.given
+import java.util.Locale
 
 class MatrixMkStringSpec extends MatrFlatSpec:
+
+   Locale.setDefault(Locale.ENGLISH)
 
    "Matrix.mkString" should "correctly render 3x2 Int Matrix" in {
 
