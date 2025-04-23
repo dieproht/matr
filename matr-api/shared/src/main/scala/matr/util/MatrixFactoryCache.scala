@@ -8,11 +8,11 @@ import scala.reflect.ClassTag
 /** Provides a cached lookup of MatrixFactories.
   *
   * Implementations of `MatrixFactory` should use it to avoid creating a new `MatrixFactory` each
-  * time a new `Matrix` is created.
+  * time a new `Matrix.Builder` is created.
   */
 object MatrixFactoryCache:
 
-   private val cachedFactories: TrieMap[String, MatrixFactory[? <: Int, ? <: Int, ?]] = TrieMap()
+   private val cache: TrieMap[String, MatrixFactory[? <: Int, ? <: Int, ?]] = TrieMap()
 
    private def cacheKey[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], ClassTag[T]): String =
       s"${valueOf[R]}-${valueOf[C]}-${summon[ClassTag[T]].runtimeClass.getName}"
@@ -21,4 +21,4 @@ object MatrixFactoryCache:
             (mf: => MatrixFactory[R, C, T])
             (using ValueOf[R], ValueOf[C], ClassTag[T])
             : MatrixFactory[R, C, T] = //
-      cachedFactories.getOrElseUpdate(cacheKey[R, C, T], mf).asInstanceOf[MatrixFactory[R, C, T]]
+      cache.getOrElseUpdate(cacheKey[R, C, T], mf).asInstanceOf[MatrixFactory[R, C, T]]
