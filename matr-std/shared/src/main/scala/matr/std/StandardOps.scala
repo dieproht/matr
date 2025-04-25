@@ -1,7 +1,6 @@
 package matr.std
 
-trait StandardOps
-    extends StandardBigDecimalOps,
+trait StandardOps extends StandardBigDecimalOps,
       StandardDoubleOps,
       StandardFloatOps,
       StandardIntOps,
