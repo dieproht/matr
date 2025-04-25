@@ -1,7 +1,10 @@
 package matr
 
 import scala.compiletime.ops.boolean.&&
-import scala.compiletime.ops.int.{<, >=, +, -}
+import scala.compiletime.ops.int.+
+import scala.compiletime.ops.int.-
+import scala.compiletime.ops.int.<
+import scala.compiletime.ops.int.>=
 
 /** Type class for getting the submatrix of a Matrix.
   *
@@ -20,33 +23,16 @@ import scala.compiletime.ops.int.{<, >=, +, -}
   * @tparam T
   *   Element type of the Matrix
   */
-trait Submatrix[RowIdxTL <: Int,
-                ColIdxTL <: Int,
-                RowIdxBR <: Int,
-                ColIdxBR <: Int,
-                R <: Int,
-                C <: Int,
-                T
-]
-         (using
-          Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
-          Matrix.Requirements.NonNegativeDimensions[
-             RowIdxBR - RowIdxTL + 1,
-             ColIdxBR - ColIdxTL + 1
-          ]
-         ):
-   def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]
+trait Submatrix[RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int, T](
+    using
+    Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
+    Matrix.Requirements.NonNegativeDimensions[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1]
+):
+    def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]
 
 object Submatrix:
 
-   object Requirements:
-
-      type WindowWithinShape[RowIdxTL <: Int,
-                             ColIdxTL <: Int,
-                             RowIdxBR <: Int,
-                             ColIdxBR <: Int,
-                             R <: Int,
-                             C <: Int
-      ] =
-         (RowIdxTL >= 0 && RowIdxTL + 1 < R && ColIdxTL >= 0 && ColIdxTL + 1 < C &&
-            RowIdxBR >= RowIdxTL && RowIdxBR < R && ColIdxBR >= ColIdxTL && ColIdxBR < C) =:= true
+    object Requirements:
+        type WindowWithinShape[RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int] =
+            (RowIdxTL >= 0 && RowIdxTL + 1 < R && ColIdxTL >= 0 && ColIdxTL + 1 < C && RowIdxBR >= RowIdxTL &&
+                RowIdxBR < R && ColIdxBR >= ColIdxTL && ColIdxBR < C) =:= true

@@ -3,17 +3,16 @@ package matr.dflt
 import matr.Matrix
 import matr.util.RowMajorIndex
 
-case class DefaultDenseMatrix[R <: Int, C <: Int, T]
-         (private val elements: Array[T])
-         (using Matrix.Requirements.NonNegativeDimensions[R, C])
-         (using vr: ValueOf[R], vc: ValueOf[C])
+case class DefaultDenseMatrix[R <: Int, C <: Int, T](private val elements: Array[T])(
+    using Matrix.Requirements.NonNegativeDimensions[R, C]
+)(using vr: ValueOf[R], vc: ValueOf[C])
     extends Matrix[R, C, T]:
-   lhs =>
+    lhs =>
 
-   require(vr.value * vc.value == elements.size)
+    require(vr.value * vc.value == elements.size)
 
-   override def apply(rowIdx: Int, colIdx: Int): T =
-      Matrix.Requirements.positionWithinShape(rowIdx, colIdx, rowDim, colDim)
-      elements(RowMajorIndex.toIdx(rowIdx, colIdx, colDim))
+    override def apply(rowIdx: Int, colIdx: Int): T =
+        Matrix.Requirements.positionWithinShape(rowIdx, colIdx, rowDim, colDim)
+        elements(RowMajorIndex.toIdx(rowIdx, colIdx, colDim))
 
-   override def toString(): String = s"DefaultDenseMatrix(${elements.mkString(",")})"
+    override def toString(): String = s"DefaultDenseMatrix(${elements.mkString(",")})"

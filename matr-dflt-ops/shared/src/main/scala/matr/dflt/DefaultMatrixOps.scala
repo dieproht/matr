@@ -1,7 +1,6 @@
 package matr.dflt
 
-trait DefaultMatrixOps
-    extends DefaultDeterminant,
+trait DefaultMatrixOps extends DefaultDeterminant,
       DefaultInverse,
       DefaultMatrixAddition,
       DefaultMatrixEquality,
