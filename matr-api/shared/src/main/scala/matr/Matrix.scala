@@ -30,11 +30,7 @@ import scala.compiletime.ops.int.>=
   * @tparam T
   *   element type
   */
-trait Matrix[R <: Int, C <: Int, T](using Matrix.Requirements.NonNegativeDimensions[R, C])(
-    using
-    ValueOf[R],
-    ValueOf[C]
-):
+trait Matrix[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], Matrix.Requirements.NonNegativeDimensions[R, C]):
 
     lhs =>
 
@@ -59,8 +55,12 @@ trait Matrix[R <: Int, C <: Int, T](using Matrix.Requirements.NonNegativeDimensi
       *   column index
       */
     def apply[RowIdx <: Int, ColIdx <: Int](
-        using Matrix.Requirements.PositionWithinShape[RowIdx, ColIdx, R, C]
-    )(using ValueOf[RowIdx], ValueOf[ColIdx]): T =
+        using
+        ValueOf[RowIdx],
+        ValueOf[ColIdx],
+        Matrix.Requirements.PositionWithinShape[RowIdx, ColIdx, R, C]
+    )
+        : T =
         apply(valueOf[RowIdx], valueOf[ColIdx])
 
     /** Returns the row dimension.
@@ -131,17 +131,17 @@ trait Matrix[R <: Int, C <: Int, T](using Matrix.Requirements.NonNegativeDimensi
 
     /** Maps this Matrix to a new Matrix by applying the specified operation element-wise.
       */
-    def map[U](op: T => U)(using mf: MatrixFactory[R, C, U]): Matrix[R, C, U] = impl.Map(this, op)
+    def map[U](op: T => U)(using MatrixFactory[R, C, U]): Matrix[R, C, U] = impl.Map(this, op)
 
     /** Combines this Matrix and the other Matrix by applying the specified operation on the respective corresponding
       * elements.
       */
-    def combine[U, V](rhs: Matrix[R, C, U])(op: (T, U) => V)(using mf: MatrixFactory[R, C, V]): Matrix[R, C, V] =
+    def combine[U, V](rhs: Matrix[R, C, U])(op: (T, U) => V)(using MatrixFactory[R, C, V]): Matrix[R, C, V] =
         impl.Combine(lhs, rhs, op)
 
     /** Allows to easily "modify" this Matrix by creating a `Builder` initialized with the values of this Matrix.
       */
-    def modify(using mf: MatrixFactory[R, C, T]): Matrix.Builder[R, C, T] = impl.Modify(this)
+    def modify(using MatrixFactory[R, C, T]): Matrix.Builder[R, C, T] = impl.Modify(this)
 
     /** Iterates over this Matrix by invoking the specified operation with each element's index.
       */

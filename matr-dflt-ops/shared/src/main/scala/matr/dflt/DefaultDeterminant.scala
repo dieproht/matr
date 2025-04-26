@@ -10,9 +10,12 @@ import math.Numeric.Implicits.infixNumericOps
 trait DefaultDeterminant:
 
     given defaultDeterminant[R <: Int, C <: Int, T](
-        using Matrix.Requirements.IsSquare[R, C]
-    )(using num: Numeric[T]): Determinant[R, C, T] =
+        using
+        Numeric[T],
+        Matrix.Requirements.IsSquare[R, C]
+    ): Determinant[R, C, T] =
         new Determinant:
+            private val num = summon[Numeric[T]]
 
             def det(m: M): T = calcDet(m.apply, m.rowDim)
 

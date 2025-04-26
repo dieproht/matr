@@ -80,18 +80,17 @@ trait MatrixFactory[R <: Int, C <: Int, T](using ValueOf[R], ValueOf[C], Numeric
       */
     def fromTuple[MatrixTuple <: Tuple, RowTuple <: Tuple](matrixTuple: MatrixTuple)(
         using
-        matrixReader: MatrixTupleReader[MatrixTuple, RowTuple],
-        rowReader: RowTupleReader[RowTuple, T]
-    )(
-        using
+        MatrixTupleReader[MatrixTuple, RowTuple],
+        RowTupleReader[RowTuple, T],
         Tuple.Size[MatrixTuple] =:= R,
         Tuple.Size[RowTuple] =:= C
     )
         : Matrix[R, C, T] =
         val buildr: Matrix.Builder[R, C, T] = builder
         val setElem: (Int, Int, T) => Unit = (rowIdx, colIdx, elem) => buildr.update(rowIdx, colIdx, elem)
-        val setRow: (Int, RowTuple) => Unit = (rowIdx, rowTuple) => rowReader.readRow(rowIdx, rowTuple, colDim, setElem)
-        matrixReader.readMatrix(matrixTuple, rowDim, setRow)
+        val setRow: (Int, RowTuple) => Unit =
+            (rowIdx, rowTuple) => summon[RowTupleReader[RowTuple, T]].readRow(rowIdx, rowTuple, colDim, setElem)
+        summon[MatrixTupleReader[MatrixTuple, RowTuple]].readMatrix(matrixTuple, rowDim, setRow)
         buildr.result
 
 object MatrixFactory:

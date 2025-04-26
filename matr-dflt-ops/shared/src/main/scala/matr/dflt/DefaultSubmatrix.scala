@@ -8,22 +8,19 @@ import scala.compiletime.ops.int.*
 trait DefaultSubmatrix:
     given defaultSubmatrix[RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int, T](
         using
+        ValueOf[RowIdxBR - RowIdxTL + 1],
+        ValueOf[ColIdxBR - ColIdxTL + 1],
+        ValueOf[RowIdxTL],
+        ValueOf[ColIdxTL],
         Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
         Matrix.Requirements.NonNegativeDimensions[
           RowIdxBR - RowIdxTL + 1,
           ColIdxBR - ColIdxTL + 1
         ]
-    )(using
-        ValueOf[RowIdxBR - RowIdxTL + 1],
-        ValueOf[ColIdxBR - ColIdxTL + 1],
-        ValueOf[RowIdxTL],
-        ValueOf[ColIdxTL]
-    )
-        : Submatrix[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T] =
+    ): Submatrix[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T] =
         new Submatrix:
-            def submatrix(m: Matrix[R, C, T])
-                : Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T] = DefaultSubmatrix
-                .SubmatrixView[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T](m)
+            def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T] =
+                DefaultSubmatrix.SubmatrixView[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T](m)
 
 object DefaultSubmatrix extends DefaultSubmatrix:
 
@@ -36,16 +33,14 @@ object DefaultSubmatrix extends DefaultSubmatrix:
                               T
     ](orig: Matrix[OrigR, OrigC, T])(
         using
+        ValueOf[RowIdxBR - RowIdxTL + 1],
+        ValueOf[ColIdxBR - ColIdxTL + 1],
+        ValueOf[RowIdxTL],
+        ValueOf[ColIdxTL],
         Matrix.Requirements.NonNegativeDimensions[
           RowIdxBR - RowIdxTL + 1,
           ColIdxBR - ColIdxTL + 1
         ]
-    )(
-        using
-        ValueOf[RowIdxBR - RowIdxTL + 1],
-        ValueOf[ColIdxBR - ColIdxTL + 1],
-        ValueOf[RowIdxTL],
-        ValueOf[ColIdxTL]
     ) extends Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T]:
         override def apply(rowIdx: Int, colIdx: Int): T =
             Matrix.Requirements.positionWithinShape(rowIdx, colIdx, rowDim, colDim)
