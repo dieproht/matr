@@ -44,8 +44,8 @@ trait TupleSupport:
         new MatrixTupleReader:
             def readMatrix(m: EmptyTuple, rowDim: Int, setRow: (rowIdx: Int, rowTuple: RowTuple) => Unit): Unit = ()
 
-    given inductiveMatrixTupleReader[MatrixTail <: Tuple, RowTuple](using
-        matrixTailReader: MatrixTupleReader[MatrixTail, RowTuple]
+    given inductiveMatrixTupleReader[MatrixTail <: Tuple, RowTuple](
+        using MatrixTupleReader[MatrixTail, RowTuple]
     ): MatrixTupleReader[RowTuple *: MatrixTail, RowTuple] =
         new MatrixTupleReader:
             def readMatrix(
@@ -57,6 +57,6 @@ trait TupleSupport:
                 val remainingMatrix: MatrixTail = m.tail
                 val rowIdx: Int = rowDim - remainingMatrix.size - 1
                 setRow(rowIdx, curRow)
-                matrixTailReader.readMatrix(remainingMatrix, rowDim, setRow)
+                summon[MatrixTupleReader[MatrixTail, RowTuple]].readMatrix(remainingMatrix, rowDim, setRow)
 
 object TupleSupport extends TupleSupport

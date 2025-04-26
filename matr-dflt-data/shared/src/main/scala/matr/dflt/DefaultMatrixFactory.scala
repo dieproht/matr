@@ -10,16 +10,12 @@ trait DefaultMatrixFactory:
 
     given defaultMatrixFactory[R <: Int, C <: Int, T](
         using
-        Numeric[T],
-        ClassTag[T]
-    )(
-        using Matrix.Requirements.NonNegativeDimensions[R, C]
-    )(
-        using
         ValueOf[R],
-        ValueOf[C]
-    )
-        : MatrixFactory[R, C, T] =
+        ValueOf[C],
+        Numeric[T],
+        ClassTag[T],
+        Matrix.Requirements.NonNegativeDimensions[R, C]
+    ): MatrixFactory[R, C, T] =
         MatrixFactoryCache[R, C, T](
           new MatrixFactory[R, C, T]:
               override def builder: Matrix.Builder[R, C, T] = DefaultMatrixBuilder()

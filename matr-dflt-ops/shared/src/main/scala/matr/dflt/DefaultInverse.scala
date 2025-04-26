@@ -14,13 +14,12 @@ import math.Numeric.Implicits.infixNumericOps
 trait DefaultInverse:
 
     given defaultInverse[R <: Int, C <: Int, T](
-        using Matrix.Requirements.IsSquare[R, C]
-    )(
         using
         ElementMultiplication.Aux[T, T, T],
         ElementDivision.Aux[T, T, T],
         Numeric[T],
-        MatrixFactory[R, C, T]
+        MatrixFactory[R, C, T],
+        Matrix.Requirements.IsSquare[R, C]
     )
         : Inverse[R, C, T] =
         new Inverse:

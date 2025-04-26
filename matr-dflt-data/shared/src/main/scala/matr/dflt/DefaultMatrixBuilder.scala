@@ -6,10 +6,13 @@ import matr.util.RowMajorIndex
 import scala.collection.mutable
 import scala.reflect.ClassTag
 
-case class DefaultMatrixBuilder[R <: Int, C <: Int, T]()(using Numeric[T])(
-    using Matrix.Requirements.NonNegativeDimensions[R, C]
-)(using ValueOf[R], ValueOf[C])
-    extends Matrix.Builder[R, C, T]:
+case class DefaultMatrixBuilder[R <: Int, C <: Int, T]()(
+    using
+    ValueOf[R],
+    ValueOf[C],
+    Numeric[T],
+    Matrix.Requirements.NonNegativeDimensions[R, C]
+) extends Matrix.Builder[R, C, T]:
 
     private val num: Numeric[T] = summon[Numeric[T]]
 

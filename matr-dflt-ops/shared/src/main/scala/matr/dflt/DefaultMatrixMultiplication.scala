@@ -8,15 +8,13 @@ trait DefaultMatrixMultiplication:
 
     given defaultMatrixMultiplication[R <: Int, C <: Int, L <: Int, T, U, X](
         using
+        ValueOf[R],
+        ValueOf[C],
+        ValueOf[L],
         ElementMultiplication.Aux[T, U, X],
         Numeric[X],
         MatrixFactory[R, L, X]
-    )(using
-        ValueOf[R],
-        ValueOf[C],
-        ValueOf[L]
-    )
-        : MatrixMultiplication[R, C, L, T, U, X] =
+    ): MatrixMultiplication[R, C, L, T, U, X] =
         new MatrixMultiplication:
 
             def dot(lhs: Lhs, rhs: Rhs): Out =
