@@ -35,8 +35,9 @@ case class DefaultMatrixBuilder[R <: Int, C <: Int, T]
          if elemArr eq null then
             given ClassTag[T] = ClassTag(v.getClass)
             elemArr = Array.fill(rowDim * colDim)(num.zero)
-            elemMap
-               .foreachEntry((mk, mv) => elemArr(RowMajorIndex.toIdx(mk._1, mk._2, colDim)) = mv)
+            elemMap.foreachEntry((mk, mv) =>
+               elemArr(RowMajorIndex.toIdx(mk._1, mk._2, colDim)) = mv
+            )
             elemMap = null
          elemArr(RowMajorIndex.toIdx(rowIdx, colIdx, valueOf[C])) = v
       this

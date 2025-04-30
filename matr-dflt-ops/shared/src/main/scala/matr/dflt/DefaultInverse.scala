@@ -54,10 +54,10 @@ trait DefaultInverse:
 
          b.result
 
-      private def swapRows(mb: Matrix.Builder[R, C, T], r1Idx: Int, r2Idx: Int): Unit = 
-        for idx <- 0 until mb.colDim do 
-          val buf = mb(r1Idx, idx)
-          mb(r1Idx, idx) = mb(r2Idx, idx)
-          mb(r2Idx, idx) = buf
+      private def swapRows(mb: Matrix.Builder[R, C, T], r1Idx: Int, r2Idx: Int): Unit =
+         for idx <- 0 until mb.colDim do
+            val buf = mb(r1Idx, idx)
+            mb(r1Idx, idx) = mb(r2Idx, idx)
+            mb(r2Idx, idx) = buf
 
 object DefaultInverse extends DefaultInverse

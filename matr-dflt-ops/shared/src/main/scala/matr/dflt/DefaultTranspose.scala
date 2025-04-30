@@ -1,6 +1,6 @@
 package matr.dflt
 
-import matr.Matrix 
+import matr.Matrix
 import matr.Transpose
 
 trait DefaultTranspose:

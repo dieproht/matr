@@ -12,11 +12,9 @@ trait DefaultMatrixFactory:
             (using Numeric[T], ClassTag[T])
             (using Matrix.Requirements.NonNegativeDimensions[R, C])
             (using ValueOf[R], ValueOf[C])
-            : MatrixFactory[R, C, T] = 
-     MatrixFactoryCache[R,C,T](
-       new MatrixFactory[R,C,T]:
+            : MatrixFactory[R, C, T] = MatrixFactoryCache[R, C, T](
+      new MatrixFactory[R, C, T]:
          override def builder: Matrix.Builder[R, C, T] = DefaultMatrixBuilder()
-     )
-      
-     
+   )
+
 object DefaultMatrixFactory extends DefaultMatrixFactory
