@@ -2,7 +2,8 @@ package matr.dflt
 
 import matr.Determinant
 import matr.Matrix
-import math.Numeric.Implicits.infixNumericOps
+
+import scala.math.Numeric.Implicits.infixNumericOps
 
 /** Default determinant implementation based on Laplace expansion. Please pay attention: its algorithmic simplicity
   * comes with a high perfomance cost!

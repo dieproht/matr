@@ -15,7 +15,6 @@ ThisBuild / developers :=
       )
     )
 ThisBuild / semanticdbEnabled := true
-ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 
 def commonSettings = Seq(
   scalacOptions ++=
