@@ -1,6 +1,7 @@
 package matr
 
 import matr.dflt.DefaultMatrixFactory.given
+
 import java.util.Locale
 
 class MatrixMkStringSpec extends MatrFlatSpec:
