@@ -7,7 +7,7 @@ import matr.Matrix
 import matr.MatrixFactory
 import matr.MatrixNotInvertibleException
 
-import math.Numeric.Implicits.infixNumericOps
+import scala.math.Numeric.Implicits.infixNumericOps
 
 /** Default determinant implementation based on Gauss Jordan method.
   */
