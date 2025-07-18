@@ -10,7 +10,7 @@ private[matr] object MkString:
         val (colWidths: Array[Int], rowMajorStrings: Array[Array[String]]) = preprocessMatrix(m, elemToString)
         renderMatrix(m.rowDim, m.colDim, colWidths, rowMajorStrings)
 
-    inline private def preprocessMatrix[R <: Int, C <: Int, T](m: Matrix[R, C, T], elemToString: T => String)
+    private inline def preprocessMatrix[R <: Int, C <: Int, T](m: Matrix[R, C, T], elemToString: T => String)
         : (Array[Int], Array[Array[String]]) =
         val colWidths: Array[Int] = new Array(m.colDim)
         val rowMajorStrings: Array[Array[String]] = Array.ofDim(m.rowDim, m.colDim)
@@ -27,7 +27,7 @@ private[matr] object MkString:
             c = c + 1
         (colWidths, rowMajorStrings)
 
-    inline private def renderMatrix(
+    private inline def renderMatrix(
         rowDim: Int,
         colDim: Int,
         colWidths: Array[Int],
@@ -40,7 +40,7 @@ private[matr] object MkString:
             renderMultiRowMatrix(builder, rowDim, colDim, colWidths, rowMajorStrings)
         builder.result
 
-    inline private def renderSingleRowMatrix(builder: StringBuilder, colDim: Int, rowMajorStrings: Array[Array[String]])
+    private inline def renderSingleRowMatrix(builder: StringBuilder, colDim: Int, rowMajorStrings: Array[Array[String]])
         : Unit =
         builder += '('
         var colIdx: Int = 0
@@ -51,7 +51,7 @@ private[matr] object MkString:
             colIdx = colIdx + 1
         builder += ')'
 
-    inline private def renderMultiRowMatrix(
+    private inline def renderMultiRowMatrix(
         builder: StringBuilder,
         rowDim: Int,
         colDim: Int,

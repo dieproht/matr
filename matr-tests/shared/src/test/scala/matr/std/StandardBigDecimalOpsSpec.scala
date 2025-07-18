@@ -1,7 +1,7 @@
 package matr.std
 
-import matr.ElementMultiplication
 import matr.ElementDivision
+import matr.ElementMultiplication
 import matr.MatrFlatSpec
 import matr.std.StandardBigDecimalOps.given
 
