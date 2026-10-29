@@ -13,15 +13,12 @@ import scala.math.Numeric.Implicits.infixNumericOps
   */
 trait DefaultInverse:
 
-    given defaultInverse[R <: Int, C <: Int, T](
-        using
-        ElementMultiplication.Aux[T, T, T],
-        ElementDivision.Aux[T, T, T],
-        Numeric[T],
-        MatrixFactory[R, C, T],
-        Matrix.Requirements.IsSquare[R, C]
-    )
-        : Inverse[R, C, T] =
+    given defaultInverse: [R <: Int, C <: Int, T] => (ElementMultiplication.Aux[T, T, T],
+                                                      ElementDivision.Aux[T, T, T],
+                                                      Numeric[T],
+                                                      MatrixFactory[R, C, T],
+                                                      Matrix.Requirements.IsSquare[R, C]
+    ) => Inverse[R, C, T] =
         new Inverse:
 
             def inv(m: M): M =

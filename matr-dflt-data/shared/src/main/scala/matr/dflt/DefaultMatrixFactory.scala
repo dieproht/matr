@@ -8,14 +8,9 @@ import scala.reflect.ClassTag
 
 trait DefaultMatrixFactory:
 
-    given defaultMatrixFactory[R <: Int, C <: Int, T](
-        using
-        ValueOf[R],
-        ValueOf[C],
-        Numeric[T],
-        ClassTag[T],
-        Matrix.Requirements.NonNegativeDimensions[R, C]
-    ): MatrixFactory[R, C, T] =
+    given defaultMatrixFactory: [R <: Int, C <: Int, T]
+        => (ValueOf[R], ValueOf[C], Numeric[T], ClassTag[T], Matrix.Requirements.NonNegativeDimensions[R, C])
+        => MatrixFactory[R, C, T] =
         MatrixFactoryCache[R, C, T](
           new MatrixFactory[R, C, T]:
               override def builder: Matrix.Builder[R, C, T] = DefaultMatrixBuilder()

@@ -10,11 +10,8 @@ import scala.math.Numeric.Implicits.infixNumericOps
   */
 trait DefaultDeterminant:
 
-    given defaultDeterminant[R <: Int, C <: Int, T](
-        using
-        Numeric[T],
-        Matrix.Requirements.IsSquare[R, C]
-    ): Determinant[R, C, T] =
+    given defaultDeterminant
+        : [R <: Int, C <: Int, T] => (Numeric[T], Matrix.Requirements.IsSquare[R, C]) => Determinant[R, C, T] =
         new Determinant:
             private val num = summon[Numeric[T]]
 

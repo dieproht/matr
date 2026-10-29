@@ -6,18 +6,14 @@ import matr.Submatrix
 import scala.compiletime.ops.int.*
 
 trait DefaultSubmatrix:
-    given defaultSubmatrix[RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int, T](
-        using
-        ValueOf[RowIdxBR - RowIdxTL + 1],
-        ValueOf[ColIdxBR - ColIdxTL + 1],
-        ValueOf[RowIdxTL],
-        ValueOf[ColIdxTL],
-        Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
-        Matrix.Requirements.NonNegativeDimensions[
-          RowIdxBR - RowIdxTL + 1,
-          ColIdxBR - ColIdxTL + 1
-        ]
-    ): Submatrix[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T] =
+    given defaultSubmatrix: [RowIdxTL <: Int, ColIdxTL <: Int, RowIdxBR <: Int, ColIdxBR <: Int, R <: Int, C <: Int, T]
+        => (ValueOf[RowIdxBR - RowIdxTL + 1],
+            ValueOf[ColIdxBR - ColIdxTL + 1],
+            ValueOf[RowIdxTL],
+            ValueOf[ColIdxTL],
+            Submatrix.Requirements.WindowWithinShape[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C],
+            Matrix.Requirements.NonNegativeDimensions[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1]
+    ) => Submatrix[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T] =
         new Submatrix:
             def submatrix(m: Matrix[R, C, T]): Matrix[RowIdxBR - RowIdxTL + 1, ColIdxBR - ColIdxTL + 1, T] =
                 DefaultSubmatrix.SubmatrixView[RowIdxTL, ColIdxTL, RowIdxBR, ColIdxBR, R, C, T](m)
