@@ -40,7 +40,7 @@ class DefaultInverseSpec extends MatrFlatSpec:
 
         val gen = GenNumericMatrix[N, N, Int](1, 10).map { m =>
             m.map { vint =>
-                val neg = Random.nextBoolean
+                val neg = Random.nextBoolean()
                 if neg then
                     Rational(-1 * vint, 1)
                 else

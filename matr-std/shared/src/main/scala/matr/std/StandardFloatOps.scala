@@ -4,23 +4,23 @@ import matr.ElementMultiplication
 
 trait StandardFloatOps:
 
-    given floatMultiplication: ElementMultiplication[Float, Float] with
+    given floatMultiplication: ElementMultiplication[Float, Float]:
         def times(lhs: Float, rhs: Float): Out = lhs * rhs
         type Out = Float
 
-    given floatBigDecimalMultiplication: ElementMultiplication[Float, BigDecimal] with
+    given floatBigDecimalMultiplication: ElementMultiplication[Float, BigDecimal]:
         def times(lhs: Float, rhs: BigDecimal): Out = lhs.toDouble * rhs
         type Out = BigDecimal
 
-    given floatDoubleMultiplication: ElementMultiplication[Float, Double] with
+    given floatDoubleMultiplication: ElementMultiplication[Float, Double]:
         def times(lhs: Float, rhs: Double): Out = lhs * rhs
         type Out = Double
 
-    given floatIntMultiplication: ElementMultiplication[Float, Int] with
+    given floatIntMultiplication: ElementMultiplication[Float, Int]:
         def times(lhs: Float, rhs: Int): Out = lhs * rhs
         type Out = Float
 
-    given floatLongMultiplication: ElementMultiplication[Float, Long] with
+    given floatLongMultiplication: ElementMultiplication[Float, Long]:
         def times(lhs: Float, rhs: Long): Out = lhs * rhs
         type Out = Float
 

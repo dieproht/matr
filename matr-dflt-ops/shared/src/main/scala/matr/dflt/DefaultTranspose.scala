@@ -5,12 +5,8 @@ import matr.Transpose
 
 trait DefaultTranspose:
 
-    given defaultTranspose[R <: Int, C <: Int, T](
-        using
-        ValueOf[R],
-        ValueOf[C],
-        Matrix.Requirements.NonNegativeDimensions[C, R]
-    ): Transpose[R, C, T] =
+    given defaultTranspose: [R <: Int, C <: Int, T]
+        => (ValueOf[R], ValueOf[C], Matrix.Requirements.NonNegativeDimensions[C, R]) => Transpose[R, C, T] =
         new Transpose:
             def transpose(m: Matrix[R, C, T]): Matrix[C, R, T] = DefaultTranspose.TransposeView(m)
 

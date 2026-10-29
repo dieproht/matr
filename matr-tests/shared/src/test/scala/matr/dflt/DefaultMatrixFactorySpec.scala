@@ -192,7 +192,7 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       val num: Numeric[Long] = summon[Numeric[Long]]
 
       val _0 = num.zero
-      def _n = Random.nextLong
+      def _n = Random.nextLong()
 
       val elements = Seq(_0, _n, _0, _n, _n, _0, _0, _0, _n)
 
@@ -209,7 +209,7 @@ class DefaultMatrixFactorySpec extends MatrFlatSpec:
       val num: Numeric[Long] = summon[Numeric[Long]]
 
       val _0 = num.zero
-      def _n = Random.nextLong
+      def _n = Random.nextLong()
 
       val elements = Seq(_0, _n, _0, _n, _n, _0, _n, _n, _n)
 

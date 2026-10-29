@@ -2,8 +2,6 @@ package matr.impl
 
 import matr.Matrix
 
-import scala.collection.mutable
-
 private[matr] object MkString:
 
     inline def apply[R <: Int, C <: Int, T](m: Matrix[R, C, T], elemToString: T => String): String =
@@ -38,7 +36,7 @@ private[matr] object MkString:
             renderSingleRowMatrix(builder, colDim, rowMajorStrings)
         else
             renderMultiRowMatrix(builder, rowDim, colDim, colWidths, rowMajorStrings)
-        builder.result
+        builder.result()
 
     private inline def renderSingleRowMatrix(builder: StringBuilder, colDim: Int, rowMajorStrings: Array[Array[String]])
         : Unit =

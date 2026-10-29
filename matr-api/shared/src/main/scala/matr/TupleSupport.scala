@@ -12,7 +12,7 @@ trait TupleSupport:
             setElem: (rowIdx: Int, colIdx: Int, elem: T) => Unit
         ): Unit
 
-    given emptyRowTupleReader[T]: RowTupleReader[EmptyTuple, T] =
+    given emptyRowTupleReader: [T] => RowTupleReader[EmptyTuple, T] =
         new RowTupleReader:
             def readRow(
                 rowIdx: Int,
@@ -21,9 +21,8 @@ trait TupleSupport:
                 setElem: (rowIdx: Int, colIdx: Int, elem: T) => Unit
             ): Unit = ()
 
-    given inductiveRowTupleReader[Tail <: Tuple, T](
-        using tailReader: RowTupleReader[Tail, T]
-    ): RowTupleReader[T *: Tail, T] =
+    given inductiveRowTupleReader
+        : [Tail <: Tuple, T] => (tailReader: RowTupleReader[Tail, T]) => RowTupleReader[T *: Tail, T] =
         new RowTupleReader:
             def readRow(
                 rowIdx: Int,
@@ -40,13 +39,12 @@ trait TupleSupport:
     trait MatrixTupleReader[MatrixTuple, RowTuple]:
         def readMatrix(m: MatrixTuple, rowDim: Int, setRow: (rowIdx: Int, rowTuple: RowTuple) => Unit): Unit
 
-    given emptyMatrixTupleReader[RowTuple]: MatrixTupleReader[EmptyTuple, RowTuple] =
+    given emptyMatrixTupleReader: [RowTuple] => MatrixTupleReader[EmptyTuple, RowTuple] =
         new MatrixTupleReader:
             def readMatrix(m: EmptyTuple, rowDim: Int, setRow: (rowIdx: Int, rowTuple: RowTuple) => Unit): Unit = ()
 
-    given inductiveMatrixTupleReader[MatrixTail <: Tuple, RowTuple](
-        using MatrixTupleReader[MatrixTail, RowTuple]
-    ): MatrixTupleReader[RowTuple *: MatrixTail, RowTuple] =
+    given inductiveMatrixTupleReader: [MatrixTail <: Tuple, RowTuple] => (MatrixTupleReader[MatrixTail, RowTuple])
+        => MatrixTupleReader[RowTuple *: MatrixTail, RowTuple] =
         new MatrixTupleReader:
             def readMatrix(
                 m: RowTuple *: MatrixTail,
