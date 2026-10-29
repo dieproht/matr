@@ -1,20 +1,22 @@
 name: build
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Cache
-      uses: coursier/cache-action@v6
-    - name: Setup Scala
-      uses: olafurpg/setup-scala@v11
-      with:
-        java-version: "adopt@1.11"
-    - name: Setup SBT
-      uses: sbt/setup-sbt@v1
-    - name: Build and Test
-      run: sbt -v test
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache
+        uses: coursier/cache-action@v6
+      - name: Setup Java
+        uses: actions/setup-java@v6.0.0
+        with:
+          distribution: "temurin"
+          java-version: "25"
+          cache: "sbt"
+      - name: Setup SBT
+        uses: sbt/setup-sbt@v1
+      - name: Build and Test
+        run: sbt -v test
