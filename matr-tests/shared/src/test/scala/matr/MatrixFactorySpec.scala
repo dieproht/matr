@@ -26,7 +26,6 @@ class MatrixFactorySpec extends MatrFlatSpec:
         given Arbitrary[Matrix[3, 2, Int]] = ArbitraryMatrix[3, 2, Int]
 
         forAll { (mg: Matrix[3, 2, Int]) =>
-
             val md: Matrix[3, 2, Int] = MatrixFactory[3, 2, Int].fromTuple(
               (mg(0, 0), mg(0, 1)),
               (mg(1, 0), mg(1, 1)),
